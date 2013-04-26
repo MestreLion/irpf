@@ -178,6 +178,8 @@ xdg-icon-resource install --noupdate --size 32 "${rootdir}/RFB.png" RFB-menu
 
 # Instalacao Receitanet ------------------------------
 
+if [[ -f receitanet-1.03.deb ]]; then
+
 dpkg-deb --fsys-tarfile receitanet-1.03.deb |
 tar -x --strip-components=3 --directory="$rootdir" './opt/Programas RFB/Receitanet/'
 
@@ -225,6 +227,10 @@ RFB-receitanet.desktop                \
 RFB-receitanet-ajuda.desktop
 
 echo "Receitanet instalado"
+
+else
+	"Receitanet não encontrado"
+fi
 
 # Instalacao do programas  ------------------------
 
