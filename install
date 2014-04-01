@@ -28,7 +28,7 @@
 # - Desisntalação igualmente limpa, sem deixar sujeira
 # - Permite desinstalar apenas 1 programa (install <ano>) ou todos (purge), que
 #     que também desistala o receitanet e o menu principal
-# - Testado em todos os IRPF de 2008 até 2013
+# - Testado em todos os IRPF de 2008 até 2014
 
 # Para instalar:
 # - Vá no site da receita e baixe a versão ZIP do IRPF dos anos desejados
@@ -178,14 +178,14 @@ xdg-icon-resource install --noupdate --size 32 "${rootdir}/RFB.png" RFB-menu
 
 # Instalacao Receitanet ------------------------------
 
-if [[ -f receitanet-1.03.deb ]]; then
+if [[ -f receitanet-1.04.deb ]]; then
 
-dpkg-deb --fsys-tarfile receitanet-1.03.deb |
+dpkg-deb --fsys-tarfile receitanet-1.04.deb |
 tar -x --strip-components=3 --directory="$rootdir" './opt/Programas RFB/Receitanet/'
 
 # Grava no registro Java
-java -jar "${receitanetdir}/lib/util-instalador.jar" -escrever "${label}Root" br/gov/serpro/receitanet/suite Path "${receitanetdir}" Origem A Tipo suite Versao 201104 Instalacao D
-java -jar "${receitanetdir}/lib/util-instalador.jar" -escrever "${label}Root" br/gov/serpro/receitanet       Path "${receitanetdir}" Origem A Tipo suite Versao 201104 Instalacao D
+java -jar "${receitanetdir}/lib/util-instalador.jar" -escrever "${label}Root" br/gov/serpro/receitanet/suite Path "${receitanetdir}" Origem A Tipo suite Versao 201105 Instalacao D
+java -jar "${receitanetdir}/lib/util-instalador.jar" -escrever "${label}Root" br/gov/serpro/receitanet       Path "${receitanetdir}" Origem A Tipo suite Versao 201105 Instalacao D
 
 
 cat > RFB-ProgramasRFB-Receitanet.directory <<EOF
@@ -202,8 +202,8 @@ Version=1.0
 Type=Application
 Terminal=false
 Exec=java -jar '${receitanetdir}/receitanet.jar'
-Name=Receitanet 1.03
-Comment=Executa Receitanet 1.03
+Name=Receitanet 1.04
+Comment=Executa Receitanet 1.04
 Icon=RFB-receitanet
 EOF
 
