@@ -346,7 +346,7 @@ uninstall_irpf() {
 	RFB-${base,,}_leiame.desktop
 
 	# Remove o diretorio
-	rm -rf "$prefix"/"$base"
+	rm -rf "$rootdir"/"$base"
 }
 
 if ((purge)); then
@@ -530,7 +530,7 @@ if ((irpf)); then
 		[Desktop Entry]
 		Version=1.0
 		Type=Directory
-		Name=${irpf^^}
+		Name=${irpfbase^^}
 		Icon=RFB
 	EOF
 
