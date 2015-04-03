@@ -31,6 +31,6 @@
 #
 #recnet	6ece0a2ecc98a51e49099ae19239a167cd708c76b696d5b80ef2cbf3b95ef8d1	receitanet-1.01.deb
 #recnet	77cbe3cc119727930da026b248598bdd87f034c4ca06f56e0f42c039f117b527	receitanet-1.03.deb
-recnet	75dcaa9b12613d0ef051f660de2f56b47a7dc164f033adfc3e52a3e011c757b2	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.04.deb
-recnet	a6678e80d7a931e2923692f20b3cfa687b55475b7a1513235b46301280014467	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.05.deb
-recnet	d468b9650bdce21384a2179da9e5336c49afbc25cb6d040d22fba9b086ec327a	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.06.deb
+recnet	75dcaa9b12613d0ef051f660de2f56b47a7dc164f033adfc3e52a3e011c757b2	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.04.deb	1.04	201104
+recnet	a6678e80d7a931e2923692f20b3cfa687b55475b7a1513235b46301280014467	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.05.deb	1.05	201105
+recnet	d468b9650bdce21384a2179da9e5336c49afbc25cb6d040d22fba9b086ec327a	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.06.deb	1.06	201106
