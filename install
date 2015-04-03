@@ -166,9 +166,10 @@ tanto o ReceitaNet quanto o IRPF do ano atual, $year.
 
 Opções de menus:
   --menu-ajuda
-	Cria a entrada de menu para a 'Ajuda'. Esta mesma Ajuda está disponível
-	de dentro do programa do IRPF, selecionando Ajuda -> Conteúdo, sendo
-	portanto desnecessária.
+	Cria a entrada de menu para a 'Ajuda', um documento em formato PDF.
+	O mesmo conteúdo desta Ajuda também está disponível em outro formato,
+	a partir do próprio programa do IRPF, selecionando Ajuda -> Conteúdo,
+	portanto esta entrada de menu é redundante.
 
   --menu-leiame
 	Cria a entrada de menu para o 'Leia-me'. Contém apenas instruções da
