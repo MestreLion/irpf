@@ -254,8 +254,6 @@ irpfdir="$rootdir"/"$irpfbase"
 desktopdir="$rootdir"/"$desktopbase"
 icon="$desktopdir"/"$iconbase"
 
-tempdir="$download"/temp
-
 if ((verbose)); then
 	q=()
 	v=(--verbose)
@@ -544,7 +542,13 @@ install_irpf() {
 
 	message "Instalando $irpfprefix $year"
 
-	# Alguns zips nao estao no formato padrao, por isso o diretorio temporario
+	# Extract the zip file.
+	# Cannot extract directly to $rootdir as not all zips have top-level dir
+	# in the IRPF2000 format used as install basename: some are irpf2000
+	# or IRPF-2000. --strip-components is the solution, but unzip has no
+	# such option, so we extract to a tempdir and use tar to repack and
+	# extract it on-the-fly to final destination.
+	local tempdir="$download"/temp
 	rm -rf "$tempdir"
 	unzip -q "$archive" -d "$tempdir"
 	tar --directory "$tempdir" -c . |
