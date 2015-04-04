@@ -312,8 +312,19 @@ purge(){
 	rm -rf "$rootdir"
 }
 
-uninstall_receitanet() {
+uninstall_menus() {
 	local deskfile
+
+	for deskfile in "$@"; do
+		if [[ "${deskfile##*.}" == 'desktop' ]]; then
+			xdg-desktop-menu uninstall --noupdate "$deskfile"
+			xdg-desktop-icon uninstall "$deskfile"
+		fi
+	done
+}
+
+uninstall_receitanet() {
+	local icontitle
 	local deskfiles=(
 		RFB-ProgramasRFB-Receitanet.directory
 		RFB-receitanet.desktop
@@ -323,16 +334,12 @@ uninstall_receitanet() {
 	message "Removendo Receitanet"
 
 	# Receitanet - atalhos
-	xdg-desktop-menu uninstall --noupdate "${deskfiles[0]}"
-	for deskfile in "${deskfiles[@]}"; do
-		if [[ "${deskfile##*.}" == 'desktop' ]]; then
-			xdg-desktop-icon uninstall "$deskfile"
-		fi
-	done
+	uninstall_menus "${deskfiles[@]}"
 
 	# Receitanet - icones
-	xdg-icon-resource uninstall --noupdate --size 32 RFB-receitanet
-	xdg-icon-resource uninstall --noupdate --size 32 RFB-receitanet-ajuda
+	for icontitle in RFB-receitanet{,-ajuda}; do
+		xdg-icon-resource uninstall --noupdate --size 32 "$icontitle"
+	done
 
 	# Limpa o registro Java
 	if [[ -f "$regjar" ]]; then
@@ -347,7 +354,6 @@ uninstall_receitanet() {
 
 uninstall_irpf() {
 	local base="$1"
-	local deskfile
 	local deskfiles=(
 		RFB-ProgramasRFB-${base^^}.directory
 		RFB-${base,,}_program.desktop
@@ -358,12 +364,7 @@ uninstall_irpf() {
 	message "Removendo $base"
 
 	# Remove atalhos do menu e do desktop
-	xdg-desktop-menu uninstall --noupdate "${deskfiles[@]}"
-	for deskfile in "${deskfiles[@]}"; do
-		if [[ "${deskfile##*.}" == 'desktop' ]]; then
-			xdg-desktop-icon uninstall "$deskfile"
-		fi
-	done
+	uninstall_menus "${deskfiles[@]}"
 
 	# Remove o diretorio
 	rm -rf "$rootdir"/"$base"
@@ -442,7 +443,7 @@ install_menus() {
 	# Menu entries
 	xdg-desktop-menu install --noupdate "$@"
 
-	# Desktop icon
+	# Desktop icons
 	if ((desktop)); then
 		for deskfile in "$@"; do
 			if [[ "${deskfile##*.}" == 'desktop' ]]; then
