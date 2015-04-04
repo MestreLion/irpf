@@ -315,17 +315,19 @@ purge(){
 uninstall_menus() {
 	local deskfile
 
+	xdg-desktop-menu uninstall --noupdate "$@"
+
 	for deskfile in "$@"; do
-		if [[ "${deskfile##*.}" == 'desktop' ]]; then
-			xdg-desktop-menu uninstall --noupdate "$deskfile"
-			xdg-desktop-icon uninstall "$deskfile"
-		fi
+		case "${deskfile##*.}" in
+		desktop) xdg-desktop-icon uninstall "$deskfile";;
+		esac
 	done
 }
 
 uninstall_receitanet() {
 	local icontitle
 	local deskfiles=(
+		RFB-ProgramasRFB.directory
 		RFB-ProgramasRFB-Receitanet.directory
 		RFB-receitanet.desktop
 		RFB-receitanet-ajuda.desktop
@@ -355,6 +357,7 @@ uninstall_receitanet() {
 uninstall_irpf() {
 	local base="$1"
 	local deskfiles=(
+		RFB-ProgramasRFB.directory
 		RFB-ProgramasRFB-${base^^}.directory
 		RFB-${base,,}_program.desktop
 		RFB-${base,,}_help.desktop
