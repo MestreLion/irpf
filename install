@@ -611,22 +611,14 @@ install_irpf() {
 
 if ((purge)); then
 	purge
-	xdg-icon-resource forceupdate
-	xdg-desktop-menu forceupdate
-	message "Pronto!"
-	exit
 elif ((uninstall)); then
 	if ((receitanet)); then uninstall_receitanet; fi
 	if ((irpf));       then uninstall_irpf "$irpfbase"; fi
-	xdg-icon-resource forceupdate
-	xdg-desktop-menu forceupdate
-	message "Pronto!"
-	exit
+else
+	install_root
+	if ((receitanet)); then install_receitanet; fi
+	if ((irpf));       then install_irpf; fi
 fi
-
-install_root
-if ((receitanet)); then install_receitanet; fi
-if ((irpf));       then install_irpf; fi
 
 # Aplica todas as atualizacoes
 xdg-icon-resource forceupdate
