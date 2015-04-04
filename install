@@ -304,10 +304,9 @@ purge(){
 	uninstall_receitanet
 
 	message "Removendo pasta raiz e menu principal"
-	return
 
 	# Icone principal
-	xdg-icon-resource uninstall --noupdate --size "$iconsize" RFB-menu
+	xdg-icon-resource uninstall --noupdate --size "$iconsize" RFB
 
 	# Diretorio raiz
 	rm -rf "$rootdir"
