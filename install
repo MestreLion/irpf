@@ -70,7 +70,6 @@ mydir=$(dirname "$(readlink -f "$0")")
 oldyear=2008
 minyear=2015
 maxyear=$year
-label="user"
 receitanet=0
 irpf=0
 archive=""
@@ -252,15 +251,6 @@ irpfbase="${irpfprefix}${year}"
 irpfdir="$rootdir"/"$irpfbase"
 
 desktopdir="$rootdir"/"$desktopbase"
-icon="$desktopdir"/"$iconbase"
-
-if ((verbose)); then
-	q=()
-	v=(--verbose)
-else
-	q=(--quiet)
-	v=()
-fi
 
 # Summary and confirmation ----------------------------------------------------
 
@@ -383,6 +373,11 @@ download_archive() {
 	local name
 	local version
 	local reg
+	local q=()
+
+	if !((verbose)); then
+		q+=(--quiet)
+	fi
 
 	if [[ "$atype" == 'recnet' ]]; then
 		name="a última versão do ReceitaNet"
@@ -442,6 +437,8 @@ install_menus() {
 # Install functions -----------------------------------------------------------
 
 install_root() {
+	local icon="$desktopdir"/"$iconbase"
+
 	message "Criando ícone e menu principal"
 
 	mkdir -p "$desktopdir"
