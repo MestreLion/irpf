@@ -373,21 +373,6 @@ uninstall_irpf() {
 	rm -rf "$rootdir"/"$base"
 }
 
-if ((purge)); then
-	purge
-	xdg-icon-resource forceupdate
-	xdg-desktop-menu forceupdate
-	message "Pronto!"
-	exit
-elif ((uninstall)); then
-	if ((receitanet)); then uninstall_receitanet; fi
-	if ((irpf));       then uninstall_irpf "$irpfbase"; fi
-	xdg-icon-resource forceupdate
-	xdg-desktop-menu forceupdate
-	message "Pronto!"
-	exit
-fi
-
 # Install helpers -------------------------------------------------------------
 
 download_archive() {
@@ -621,6 +606,23 @@ install_irpf() {
 
 	install_menus "${irpfdeskfiles[@]}"
 }
+
+# Main procedures and logic ---------------------------------------------------
+
+if ((purge)); then
+	purge
+	xdg-icon-resource forceupdate
+	xdg-desktop-menu forceupdate
+	message "Pronto!"
+	exit
+elif ((uninstall)); then
+	if ((receitanet)); then uninstall_receitanet; fi
+	if ((irpf));       then uninstall_irpf "$irpfbase"; fi
+	xdg-icon-resource forceupdate
+	xdg-desktop-menu forceupdate
+	message "Pronto!"
+	exit
+fi
 
 install_root
 if ((receitanet)); then install_receitanet; fi
