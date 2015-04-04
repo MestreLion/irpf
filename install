@@ -456,29 +456,29 @@ install_menus() {
 	fi
 }
 
-# Instalacao da pasta raiz ---------------------------
+# Install functions -----------------------------------------------------------
 
-message "Criando ícone e menu principal"
+install_root() {
+	message "Criando ícone e menu principal"
 
-mkdir -p "$rootdir"
-mkdir -p "$desktopdir"
+	mkdir -p "$desktopdir"
 
-decode "$iconembed" > "$icon"
+	decode "$iconembed" > "$icon"
 
-cat > "$desktopdir"/RFB-ProgramasRFB.directory <<-EOF
-	[Desktop Entry]
-	Version=1.0
-	Type=Directory
-	Name=Imposto de Renda
-	Comment=Receita Federal do Brasil
-	Icon=RFB
-EOF
+	cat > "$desktopdir"/RFB-ProgramasRFB.directory <<-EOF
+		[Desktop Entry]
+		Version=1.0
+		Type=Directory
+		Name=Imposto de Renda
+		Comment=Receita Federal do Brasil
+		Icon=RFB
+	EOF
 
-xdg-icon-resource install --novendor --noupdate --size "$iconsize" "$icon" RFB
+	xdg-icon-resource install --novendor --noupdate --size "$iconsize" \
+		"$icon" RFB
+}
 
-# Instalacao Receitanet ------------------------------
-
-if ((receitanet)); then
+install_receitanet() {
 	empty_dir "$receitanetdir"
 	download_archive 'recnet'
 
@@ -489,12 +489,15 @@ if ((receitanet)); then
 		'./opt/Programas RFB/Receitanet/'
 
 	# Grava no registro Java
-	regargs=(-escrever userRoot REGPATH_DUMMY
+	local regpath
+	local regargs=(
+		-escrever userRoot REGPATH_DUMMY
 		Path "$receitanetdir"
 		Origem A
 		Tipo suite
 		Versao "$regver"
-		Instalacao D)
+		Instalacao D
+	)
 	for regpath in "${regpaths[@]}"; do
 		regargs[2]="$regpath"
 		java -jar "$regjar" "${regargs[@]}" || true
@@ -523,7 +526,7 @@ if ((receitanet)); then
 	xdg-icon-resource install --noupdate --size 32 \
 		"${receitanetdir}/imagens/Receitanet.xpm" RFB-receitanet
 
-	recnetdeskfiles=(
+	local recnetdeskfiles=(
 		"$desktopdir"/RFB-ProgramasRFB.directory
 		"$desktopdir"/RFB-ProgramasRFB-Receitanet.directory
 		"$desktopdir"/RFB-receitanet.desktop
@@ -548,12 +551,9 @@ if ((receitanet)); then
 	fi
 
 	install_menus "${recnetdeskfiles[@]}"
-fi
+}
 
-
-# Instalacao do programas  ------------------------
-
-if ((irpf)); then
+install_irpf() {
 	empty_dir "$irpfdir"
 	download_archive "$year"
 
@@ -585,7 +585,7 @@ if ((irpf)); then
 		Icon=RFB
 	EOF
 
-	irpfdeskfiles=(
+	local irpfdeskfiles=(
 		"$desktopdir"/RFB-ProgramasRFB.directory
 		"$desktopdir"/RFB-ProgramasRFB-${irpfbase^^}.directory
 		"$desktopdir"/RFB-${irpfbase,,}_program.desktop
@@ -620,7 +620,11 @@ if ((irpf)); then
 	fi
 
 	install_menus "${irpfdeskfiles[@]}"
-fi
+}
+
+install_root
+if ((receitanet)); then install_receitanet; fi
+if ((irpf));       then install_irpf; fi
 
 # Aplica todas as atualizacoes
 xdg-icon-resource forceupdate
