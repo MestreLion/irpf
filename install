@@ -205,6 +205,7 @@ while (( $# )); do
 	--uninstall-all	) purge=1;;
 	--menu-ajuda	) helpmenu=1;;
 	--menu-leiame	) readmemenu=1;;
+	--desktop	) desktop=1;;
 	--receitanet	) receitanet=1;;
 
 	--rootdir=*	) rootdir="${1#*=}";;
@@ -313,12 +314,22 @@ purge(){
 }
 
 uninstall_receitanet() {
+	local deskfile
+	local deskfiles=(
+		RFB-ProgramasRFB-Receitanet.directory
+		RFB-receitanet.desktop
+		RFB-receitanet-ajuda.desktop
+	)
+
 	message "Removendo Receitanet"
 
 	# Receitanet - atalhos
-	xdg-desktop-menu uninstall --noupdate  \
-	RFB-receitanet.desktop                 \
-	RFB-receitanet-ajuda.desktop
+	xdg-desktop-menu uninstall --noupdate "${deskfiles[0]}"
+	for deskfile in "${deskfiles[@]}"; do
+		if [[ "${deskfile##*.}" == 'desktop' ]]; then
+			xdg-desktop-icon uninstall "$deskfile"
+		fi
+	done
 
 	# Receitanet - icones
 	xdg-icon-resource uninstall --noupdate --size 32 RFB-receitanet
@@ -337,14 +348,23 @@ uninstall_receitanet() {
 
 uninstall_irpf() {
 	local base="$1"
+	local deskfile
+	local deskfiles=(
+		RFB-ProgramasRFB-${base^^}.directory
+		RFB-${base,,}_program.desktop
+		RFB-${base,,}_help.desktop
+		RFB-${base,,}_leiame.desktop
+	)
 
 	message "Removendo $base"
 
-	# Desinstala atalhos
-	xdg-desktop-menu uninstall --noupdate \
-	RFB-${base,,}_program.desktop         \
-	RFB-${base,,}_help.desktop            \
-	RFB-${base,,}_leiame.desktop
+	# Remove atalhos do menu e do desktop
+	xdg-desktop-menu uninstall --noupdate "${deskfiles[@]}"
+	for deskfile in "${deskfiles[@]}"; do
+		if [[ "${deskfile##*.}" == 'desktop' ]]; then
+			xdg-desktop-icon uninstall "$deskfile"
+		fi
+	done
 
 	# Remove o diretorio
 	rm -rf "$rootdir"/"$base"
@@ -365,7 +385,7 @@ elif ((uninstall)); then
 	exit
 fi
 
-# Install ---------------------------------------------------------------------
+# Install helpers -------------------------------------------------------------
 
 download_archive() {
 	local atype="$1"
@@ -415,6 +435,22 @@ empty_dir() {
 	fi
 	rm -rf "$path"
 	mkdir -p "$path"
+}
+
+install_menus() {
+	local deskfile
+
+	# Menu entries
+	xdg-desktop-menu install --noupdate "$@"
+
+	# Desktop icon
+	if ((desktop)); then
+		for deskfile in "$@"; do
+			if [[ "${deskfile##*.}" == 'desktop' ]]; then
+				xdg-desktop-icon install "$deskfile"
+			fi
+		done
+	fi
 }
 
 # Instalacao da pasta raiz ---------------------------
@@ -508,7 +544,7 @@ if ((receitanet)); then
 		recnetdeskfiles+=("$desktopdir"/RFB-receitanet-ajuda.desktop)
 	fi
 
-	xdg-desktop-menu install --noupdate "${recnetdeskfiles[@]}"
+	install_menus "${recnetdeskfiles[@]}"
 fi
 
 
@@ -580,8 +616,7 @@ if ((irpf)); then
 		irpfdeskfiles+=("$desktopdir"/RFB-${irpfbase,,}_leiame.desktop)
 	fi
 
-	# Instala menus
-	xdg-desktop-menu install --noupdate "${irpfdeskfiles[@]}"
+	install_menus "${irpfdeskfiles[@]}"
 fi
 
 # Aplica todas as atualizacoes
