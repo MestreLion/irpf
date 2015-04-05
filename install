@@ -90,9 +90,9 @@ green()   { tput setaf 2; bold "$@"; }
 
 fatal()   { (($#)) && echo "$(red "$@")" >&2 || :; exit 1; }
 message() { ((verbose)) && echo "$(green '* ' "$@")" || :; return; }
-argerr()  { printf "%s: %s\n" "$myname" "${1:-erro}" >&2 ; usage 1 ; }
+argerr()  { echo "$myname: erro${1:+: $(printf '%s' "$@")}" >&2 ; usage 1 ; }
 invalid() { argerr "opção inválida: $1" ; }
-missing() { argerr "está faltando um operando${1:+ de $1}." ; }
+missing() { argerr "está faltando um operando${1:+ em '$1'}." ; }
 integer() { [[ "${1:-}" != *[!0-9]* ]] ||
             argerr "'$1' não é um ano válido."; }
 yesno()   { if (($1)); then green "Sim"; else red "Não"; fi; }
@@ -222,7 +222,8 @@ integer "$year" "--irpf"
 
 if !((receitanet)) && !((irpf)); then
 	if ((uninstall)); then
-		argerr "Para remover é necessário especificar --irpf ANO ou --receitanet"
+		argerr "Para remover é necessário especificar --irpf ANO" \
+			" ou --receitanet"
 	else
 		receitanet=1
 		irpf=1
@@ -230,7 +231,8 @@ if !((receitanet)) && !((irpf)); then
 fi
 
 if ((year < minyear)); then
-	argerr "Para anos entre $oldyear e $((minyear-1)), utilize a versão antiga, install.old"
+	argerr "Para anos entre $oldyear e $((minyear-1))," \
+		" utilize a versão antiga, install.old"
 fi
 
 if ((year > maxyear)) || ((year < minyear)); then
@@ -411,7 +413,9 @@ download_archive() {
 empty_dir() {
 	local path=$1
 	if !((force)) && [[ -e "$path" ]]; then
-		fatal "A pasta '$path' já existe! Utilize --uninstall para remover ou --force para sobrescrever"
+		fatal "A pasta '$path' já existe!"          \
+			" Utilize --uninstall para remover" \
+			" ou --force para sobrescrever"
 	fi
 	rm -rf "$path"
 	mkdir -p "$path"
@@ -448,7 +452,8 @@ patch_xdg() {
 
 	local version="1.0.2"
 	local xdgdesktopmenu="$(cmdpath xdg-desktop-menu)" ||
-		fatal "'xdg-desktop-menu' não foi encontrado! Instale o pacote xdg-utils."
+		fatal "'xdg-desktop-menu' não foi encontrado!" \
+			" Instale o pacote xdg-utils."
 
 	# Copy and patch only the known buggy version, otherwise symlink it
 	if [[ "$("$xdgdesktopmenu" --version | cut -d' ' -f2)" == "$version" ]]
