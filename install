@@ -38,16 +38,19 @@ download="$rootdir"/download
 # Desktop files base dir
 desktopbase=desktop
 
-# Receitanet
+# Receitanet dir basename
 receitanetbase=Receitanet
+
+# Vendor prefix for xdg icons and desktop files
+vendor=RFB
 
 # IRPF
 year=$(date +%Y)
 irpfprefix=IRPF
 
-# Icon
-iconbase=RFB-64.png
-iconsize=64
+# Main icon
+iconprefix=rfb
+iconsizes=(32 64 512)
 
 # Uninstall flags
 uninstall=0
@@ -243,6 +246,8 @@ irpfdir="$rootdir"/"$irpfbase"
 
 desktopdir="$rootdir"/"$desktopbase"
 
+iconname="${vendor}-${iconprefix}"
+
 # Summary and confirmation ----------------------------------------------------
 
 if ((verbose)); then
@@ -275,6 +280,7 @@ fi
 
 purge(){
 	local folder
+	local iconsize
 
 	for folder in "$rootdir"/"$irpfprefix"*; do
 		uninstall_irpf "$(basename "$folder")"
@@ -285,7 +291,10 @@ purge(){
 	message "Removendo pasta raiz e menu principal"
 
 	# Icone principal
-	xdg-icon-resource uninstall --noupdate --size "$iconsize" RFB
+	for iconsize in "${iconsizes[@]}"; do
+		xdg-icon-resource uninstall --noupdate \
+			--size "$iconsize" "$iconname"
+	done
 
 	# Diretorio raiz
 	rm -rf "$rootdir"
@@ -318,7 +327,7 @@ uninstall_receitanet() {
 	uninstall_menus "${deskfiles[@]}"
 
 	# Receitanet - icones
-	for icontitle in RFB-receitanet{,-ajuda}; do
+	for icontitle in "$vendor"-receitanet{,-ajuda}; do
 		xdg-icon-resource uninstall --noupdate --size 32 "$icontitle"
 	done
 
@@ -428,13 +437,11 @@ install_menus() {
 # Install functions -----------------------------------------------------------
 
 install_root() {
-	local icon="$desktopdir"/"$iconbase"
+	local icon
 
 	message "Criando ícone e menu principal"
 
 	mkdir -p "$desktopdir"
-
-	cp "$mydir"/icons/"$iconbase" "$icon"
 
 	cat > "$desktopdir"/RFB-ProgramasRFB.directory <<-EOF
 		[Desktop Entry]
@@ -442,11 +449,16 @@ install_root() {
 		Type=Directory
 		Name=Imposto de Renda
 		Comment=Receita Federal do Brasil
-		Icon=RFB
+		Icon=$iconname
 	EOF
 
-	xdg-icon-resource install --novendor --noupdate --size "$iconsize" \
-		"$icon" RFB
+	# Icone principal
+	for iconsize in "${iconsizes[@]}"; do
+		icon="$mydir"/icons/"${iconprefix}-${iconsize}.png"
+		cp "$icon" "$desktopdir"/"${vendor}-${icon##*/}"
+		xdg-icon-resource install --noupdate \
+			--size "$iconsize" "$icon" "$iconname"
+	done
 }
 
 install_receitanet() {
@@ -479,7 +491,7 @@ install_receitanet() {
 		Version=1.0
 		Type=Directory
 		Name=Receitanet
-		Icon=RFB-receitanet
+		Icon=$vendor-receitanet
 	EOF
 
 	cat > "$desktopdir"/RFB-receitanet.desktop <<-EOF
@@ -491,11 +503,11 @@ install_receitanet() {
 		Name=Receitanet $recver
 		Comment=Imposto de Renda - Receitanet
 		GenericName=Receita Federal
-		Icon=RFB-receitanet
+		Icon=$vendor-receitanet
 	EOF
 
 	xdg-icon-resource install --noupdate --size 32 \
-		"${receitanetdir}/imagens/Receitanet.xpm" RFB-receitanet
+		"${receitanetdir}/imagens/Receitanet.xpm" "$vendor"-receitanet
 
 	local recnetdeskfiles=(
 		"$desktopdir"/RFB-ProgramasRFB.directory
@@ -512,11 +524,12 @@ install_receitanet() {
 			Exec=${javacmd[@]} '${receitanetdir}/receitanet.jar' -ajuda
 			Name=Ajuda do Receitanet $recver
 			GenericName=Receita Federal
-			Icon=RFB-receitanet-ajuda
+			Icon=$vendor-receitanet-ajuda
 		EOF
 
 		xdg-icon-resource install --noupdate --size 32 \
-			"${receitanetdir}/imagens/Ajuda.xpm" RFB-receitanet-ajuda
+			"${receitanetdir}/imagens/Ajuda.xpm"   \
+			"$vendor"-receitanet-ajuda
 
 		recnetdeskfiles+=("$desktopdir"/RFB-receitanet-ajuda.desktop)
 	fi
@@ -548,7 +561,7 @@ install_irpf() {
 		Version=1.0
 		Type=Directory
 		Name=${irpfbase^^}
-		Icon=RFB
+		Icon=$iconname
 	EOF
 
 	cat > "$desktopdir"/RFB-${irpfbase,,}_program.desktop <<-EOF
@@ -559,7 +572,7 @@ install_irpf() {
 		Comment=Imposto de Renda $year
 		GenericName=Receita Federal
 		Exec=${javacmd[@]} '${irpfdir}/irpf.jar'
-		Icon=RFB
+		Icon=$iconname
 	EOF
 
 	local irpfdeskfiles=(
@@ -577,7 +590,7 @@ install_irpf() {
 			Comment=Imposto de Renda $year
 			GenericName=Receita Federal
 			Exec=xdg-open '${irpfdir}/help/AjudaIRPF.pdf'
-			Icon=RFB
+			Icon=$iconname
 		EOF
 		irpfdeskfiles+=("$desktopdir"/RFB-${irpfbase,,}_help.desktop)
 	fi
@@ -591,7 +604,7 @@ install_irpf() {
 			Comment=Imposto de Renda $year
 			GenericName=Receita Federal
 			Exec=xdg-open '${irpfdir}/Leia-me.htm'
-			Icon=RFB
+			Icon=$iconname
 		EOF
 		irpfdeskfiles+=("$desktopdir"/RFB-${irpfbase,,}_leiame.desktop)
 	fi
