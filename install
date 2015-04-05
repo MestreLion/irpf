@@ -228,6 +228,9 @@ if !((receitanet)) && !((irpf)); then
 		receitanet=1
 		irpf=1
 	fi
+elif ((purge)); then
+	argerr "Ao remover todos os programas não se pode selecionar" \
+		" --irpf ou --receitanet específicos."
 fi
 
 if ((year < minyear)); then
