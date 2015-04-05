@@ -203,17 +203,17 @@ while (( $# )); do
 	--receitanet	) receitanet=1;;
 
 	--rootdir=*	) rootdir="${1#*=}";;
-	--rootdir	) shift; rootdir="$1";;
+	--rootdir	) shift; rootdir="${1:-}";;
 
 	--download=*	) download="${1#*=}";;
-	--download	) shift; download="$1";;
+	--download	) shift; download="${1:-}";;
 
 	--irpf=*	) year="${1#*=}"; irpf=1;;
-	--irpf  	) shift; year="$1"; irpf=1;;
+	--irpf  	) shift; year="${1:-}"; irpf=1;;
 
 	*) invalid "$1"; break  ;;
 	esac
-	shift
+	shift || :
 done
 
 [[ "$rootdir" ]]  || missing "--rootdir"
