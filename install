@@ -317,13 +317,18 @@ purge(){
 uninstall_check_dir() {
 	local checkdir=$1
 	local name=${2:-}
+	local silent=${3:-0}
 
-	if ! ((force)) && ! [[ -d "$checkdir" ]]; then
+	if ((force)) || [[ -d "$checkdir" ]]; then
+		return
+	fi
+
+	if !((silent)); then
 		echo "Pasta ${name:+$name }'$checkdir' não existe." \
 			"O programa já foi removido antes?" >&2
 		echo "Use --force para forçar limpeza de ícones e menus" >&2
-		return 1
 	fi
+	return 1
 }
 
 uninstall_menus() {
@@ -345,11 +350,11 @@ uninstall_receitanet() {
 		"$vendor"-receitanet{.directory,{,-ajuda}.desktop}
 	)
 
-	message "Removendo Receitanet"
-
-	if ! uninstall_check_dir "$receitanetdir" "do Receitanet"; then
+	if ! uninstall_check_dir "$receitanetdir" "do Receitanet" "$purge"; then
 		return
 	fi
+
+	message "Removendo Receitanet"
 
 	# Receitanet - atalhos
 	uninstall_menus "${deskfiles[@]}"
