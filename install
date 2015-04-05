@@ -96,6 +96,7 @@ missing() { argerr "está faltando um operando${1:+ em '$1'}." ; }
 integer() { [[ "${1:-}" != *[!0-9]* ]] ||
             argerr "'$1' não é um ano válido."; }
 yesno()   { if (($1)); then green "Sim"; else red "Não"; fi; }
+linefeed(){ ((verbose)) && echo; }
 cmdpath() { type -P "$1"; }
 
 confirm()
@@ -105,6 +106,7 @@ confirm()
 	local reply
 
 	if ! ((yes)); then
+		linefeed
 		read -p "$message (s/n, padrão $default): " reply
 		reply="${reply:-$default}"
 		case "$reply" in
@@ -126,7 +128,7 @@ usage() {
 	fi
 	cat <<USAGE
 
-Um instalador para os programas da Receita Federal (IRPF e ReceitaNet)
+Instalador para os programas da Receita Federal (IRPF e ReceitaNet)
 
 Inclui download dos programas, verificação de integridade, entradas de menu com
 ícones oficiais, instalação e remoção sem necessidade de privilégios
@@ -137,6 +139,10 @@ Testado com todos os programas da Receita desde 2008.
 Opções gerais:
   -h|--help  - Exibe esta página.
   -q|--quiet - Não exibe mensagens informativas, como o progresso da instalação.
+  -y|--yes   - Automaticamente responde SIM a todas as perguntas de confirmação.
+  -f|--force - Força ações mesmo que sejam redundantes, por exemplo instalação
+               de programas já existentes (sobrescrevendo arquivos) ou a remoção
+               de programas inexistentes.
 
 Opções de pasta:
   --rootdir PATH
@@ -194,6 +200,7 @@ while (( $# )); do
 	case "$1" in
 	-h|--help	) usage;;
 	-q|--quiet	) verbose=0;;
+	-y|--yes	) yes=1;;
 	-f|--force	) force=1;;
 	--uninstall	) uninstall=1;;
 	--uninstall-all	) purge=1;;
@@ -280,10 +287,9 @@ if ((verbose)); then
 		fi
 	fi
 			echo "Pasta principal:    $rootdir"
-	echo
-	confirm
-	echo
 fi
+confirm
+linefeed
 
 # Uninstall -------------------------------------------------------------------
 
@@ -448,8 +454,8 @@ empty_dir() {
 	local path=$1
 	if !((force)) && [[ -e "$path" ]]; then
 		fatal "A pasta '$path' já existe!"          \
-			" Utilize --uninstall para remover" \
-			" ou --force para sobrescrever"
+			" Utilize --uninstall para remover o programa" \
+			" ou --force para sobrescrever arquivos."
 	fi
 	rm -rf "$path"
 	mkdir -p "$path"
