@@ -261,19 +261,20 @@ if ((verbose)); then
 		echo "${redC}REMOVER${endC}"
 	fi
 	if !((purge)); then
-		echo "ReceitaNet:  $(yesno $receitanet)"
 		if ((irpf)); then
-			echo "IRPF:        $year"
+			echo "Programa do IRPF:   $year"
 		else
-			echo "IRPF:        Não"
+			echo "Programa do IRPF:   Não"
 		fi
+			echo "Receitanet:         $(yesno $receitanet)"
 		if !((uninstall)); then
-			echo "Menu Ajuda:  $(yesno $helpmenu)"
-			echo "Menu Leiame: $(yesno $readmemenu)"
-			echo "Downloads:   $download"
+			echo "Ícones no Desktop:  $(yesno $desktop)"
+			echo "Inclui menu Ajuda:  $(yesno $helpmenu)"
+			echo "Inclui menu Leiame: $(yesno $readmemenu)"
+			echo "Pasta Downloads:    $download"
 		fi
 	fi
-	echo "Pasta raiz:  $rootdir"
+			echo "Pasta principal:    $rootdir"
 	echo
 	confirm
 	echo
