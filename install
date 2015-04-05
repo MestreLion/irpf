@@ -82,26 +82,26 @@ regpaths=('br/gov/serpro/receitanet'{,'/suite'})
 
 checksumfile="$mydir"/sha256sum.txt
 
-greenC=$(tput setaf 2; tput bold)
-redC=$(tput setaf 1; tput bold)
-endC=$(tput sgr0)
-
 # Helper functions ------------------------------------------------------------
 
-fatal()   { [[ "${1:-}" ]] && echo "${redC}$1${endC}" >&2; exit ${2:-1}; }
-message() { ((verbose)) && echo "${greenC}* ${1}${endC}"; return 0; }
+bold()    { tput bold; printf '%s' "$@"; tput sgr0; }
+red()     { tput setaf 1; bold "$@"; }
+green()   { tput setaf 2; bold "$@"; }
+
+fatal()   { (($#)) && echo "$(red "$@")" >&2 || :; exit 1; }
+message() { ((verbose)) && echo "$(green '* ' "$@")" || :; return; }
 argerr()  { printf "%s: %s\n" "$myname" "${1:-erro}" >&2 ; usage 1 ; }
 invalid() { argerr "opção inválida: $1" ; }
 missing() { argerr "está faltando um operando${1:+ de $1}." ; }
 integer() { [[ "${1:-}" != *[!0-9]* ]] ||
             argerr "'$1' não é um ano válido."; }
-yesno()   { if (($1)); then printf "Sim"; else printf "Não"; fi; }
+yesno()   { if (($1)); then green "Sim"; else red "Não"; fi; }
 cmdpath() { type -P "$1"; }
 
 confirm()
 {
-	local message=${1:-"Confirma?"}
-	local default="NÃO"
+	local message=$(bold "${1:-"Confirma?"}")
+	local default=$(bold "NÃO")
 	local reply
 
 	if ! ((yes)); then
@@ -256,13 +256,13 @@ iconname="${vendor}-${iconprefix}"
 if ((verbose)); then
 	message "Opções selecionadas:"
 	if ((purge)); then
-		echo "${redC}REMOVER TODOS OS PROGRAMAS${endC}"
+		echo $(red "REMOVER TODOS OS PROGRAMAS")
 	elif ((uninstall)); then
-		echo "${redC}REMOVER${endC}"
+		echo $(red "REMOVER")
 	fi
 	if !((purge)); then
 		if ((irpf)); then
-			echo "Programa do IRPF:   $year"
+			echo "Programa do IRPF:   $(bold $year)"
 		else
 			echo "Programa do IRPF:   Não"
 		fi
