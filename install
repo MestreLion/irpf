@@ -181,11 +181,14 @@ Opções de menus:
 
 Opções de remoção:
   --uninstall
-	Remove o ReceitaNet ou o IRPF de um ano específico. Deve ser utilizada
-	em conjunto com --receitanet ou --irpf ANO.
+	Remove o ReceitaNet ou o IRPF de um ano específico.
+	Deve ser utilizada em conjunto com --receitanet ou --irpf ANO.
 
   --uninstall-all
 	Remove todos os programas da Receita.
+	Não deve ser utilizado com nenhuma outra opção além de --rootdir.
+	Por segurança, o uso em conjunto com --irpf, --receitanet ou --uninstall
+	resulta em erro. Demais opções são ignoradas.
 
 Copyright (C) 2015 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
 Licença: GPLv3 ou posterior. Consulte <http://www.gnu.org/licenses/gpl.html>
@@ -227,7 +230,13 @@ done
 [[ "$download" ]] || missing "--download"
 integer "$year" "--irpf"
 
-if !((receitanet)) && !((irpf)); then
+if ((purge)); then
+	if ((receitanet || irpf || uninstall)); then
+		argerr "--uninstall-all remove todos os programas instalados." \
+			" Para remover programas específicos,"                 \
+			" utilize --uninstall."
+	fi
+elif !((receitanet)) && !((irpf)); then
 	if ((uninstall)); then
 		argerr "Para remover é necessário especificar --irpf ANO" \
 			" ou --receitanet"
@@ -235,9 +244,6 @@ if !((receitanet)) && !((irpf)); then
 		receitanet=1
 		irpf=1
 	fi
-elif ((purge)); then
-	argerr "Ao remover todos os programas não se pode selecionar" \
-		" --irpf ou --receitanet específicos."
 fi
 
 if ((year < minyear)); then
