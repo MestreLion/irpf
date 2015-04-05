@@ -245,6 +245,7 @@ irpfbase="${irpfprefix}${year}"
 irpfdir="$rootdir"/"$irpfbase"
 
 desktopdir="$rootdir"/"$desktopbase"
+rootmenu="$desktopdir"/"$vendor"-ProgramasRFB.directory
 
 iconname="${vendor}-${iconprefix}"
 
@@ -315,10 +316,8 @@ uninstall_menus() {
 uninstall_receitanet() {
 	local icontitle
 	local deskfiles=(
-		"$vendor"-ProgramasRFB.directory
-		"$vendor"-Receitanet.directory
-		"$vendor"-receitanet.desktop
-		"$vendor"-receitanet-ajuda.desktop
+		"${rootmenu##*/}"
+		"$vendor"-receitanet{.directory,{,-ajuda}.desktop}
 	)
 
 	message "Removendo Receitanet"
@@ -327,8 +326,8 @@ uninstall_receitanet() {
 	uninstall_menus "${deskfiles[@]}"
 
 	# Receitanet - icones
-	for icontitle in "$vendor"-receitanet{,-ajuda}; do
-		xdg-icon-resource uninstall --noupdate --size 32 "$icontitle"
+	for icontitle in "${deskfiles[@]:2}"; do
+		xdg-icon-resource uninstall --noupdate --size 32 "${icontitle%.*}"
 	done
 
 	# Limpa o registro Java
@@ -345,11 +344,8 @@ uninstall_receitanet() {
 uninstall_irpf() {
 	local base="$1"
 	local deskfiles=(
-		"$vendor"-ProgramasRFB.directory
-		"$vendor"-${base}.directory
-		"$vendor"-${base}.desktop
-		"$vendor"-${base}-ajuda.desktop
-		"$vendor"-${base}-leiame.desktop
+		"${rootmenu##*/}"
+		"$vendor"-"${irpfbase,,}"{.directory,{,-{ajuda,leiame}}.desktop}
 	)
 
 	message "Removendo $base"
@@ -443,7 +439,8 @@ install_root() {
 
 	mkdir -p "$desktopdir"
 
-	cat > "$desktopdir"/"$vendor"-ProgramasRFB.directory <<-EOF
+	# Menu
+	cat > "$rootmenu" <<-EOF
 		[Desktop Entry]
 		Version=1.0
 		Type=Directory
@@ -452,7 +449,7 @@ install_root() {
 		Icon=$iconname
 	EOF
 
-	# Icone principal
+	# Icons
 	for iconsize in "${iconsizes[@]}"; do
 		icon="$mydir"/icons/"${iconprefix}-${iconsize}.png"
 		cp "$icon" "$desktopdir"/"${vendor}-${icon##*/}"
@@ -486,7 +483,13 @@ install_receitanet() {
 		java -jar "$regjar" "${regargs[@]}" || true
 	done
 
-	cat > "$desktopdir"/"$vendor"-Receitanet.directory <<-EOF
+	local deskprefix="$desktopdir"/"$vendor"-receitanet
+	local recnetdeskfiles=(
+		"$rootmenu"
+		"$deskprefix".{directory,desktop}
+	)
+
+	cat > "${recnetdeskfiles[1]}" <<-EOF
 		[Desktop Entry]
 		Version=1.0
 		Type=Directory
@@ -494,7 +497,7 @@ install_receitanet() {
 		Icon=$vendor-receitanet
 	EOF
 
-	cat > "$desktopdir"/"$vendor"-receitanet.desktop <<-EOF
+	cat > "${recnetdeskfiles[-1]}" <<-EOF
 		[Desktop Entry]
 		Version=1.0
 		Type=Application
@@ -506,17 +509,14 @@ install_receitanet() {
 		Icon=$vendor-receitanet
 	EOF
 
-	xdg-icon-resource install --noupdate --size 32 \
-		"${receitanetdir}/imagens/Receitanet.xpm" "$vendor"-receitanet
-
-	local recnetdeskfiles=(
-		"$desktopdir"/"$vendor"-ProgramasRFB.directory
-		"$desktopdir"/"$vendor"-Receitanet.directory
-		"$desktopdir"/"$vendor"-receitanet.desktop
-	)
+	xdg-icon-resource install --noupdate --size 32    \
+		"${receitanetdir}/imagens/Receitanet.xpm" \
+		"$(basename "${recnetdeskfiles[-1]%.*}")"
 
 	if ((helpmenu)); then
-		cat > "$desktopdir"/"$vendor"-receitanet-ajuda.desktop <<-EOF
+		recnetdeskfiles+=("$deskprefix"-ajuda.desktop)
+
+		cat > "${recnetdeskfiles[-1]}" <<-EOF
 			[Desktop Entry]
 			Version=1.0
 			Type=Application
@@ -529,9 +529,7 @@ install_receitanet() {
 
 		xdg-icon-resource install --noupdate --size 32 \
 			"${receitanetdir}/imagens/Ajuda.xpm"   \
-			"$vendor"-receitanet-ajuda
-
-		recnetdeskfiles+=("$desktopdir"/"$vendor"-receitanet-ajuda.desktop)
+			"$(basename "${recnetdeskfiles[-1]%.*}")"
 	fi
 
 	install_menus "${recnetdeskfiles[@]}"
@@ -556,7 +554,13 @@ install_irpf() {
 	tar --directory="$irpfdir" -x --strip-components=2
 	rm -rf "$tempdir"
 
-	cat > "$desktopdir"/"$vendor"-"${irpfbase}".directory <<-EOF
+	local deskprefix="$desktopdir"/"$vendor"-"${irpfbase,,}"
+	local irpfdeskfiles=(
+		"$rootmenu"
+		"$deskprefix".{directory,desktop}
+	)
+
+	cat > "${irpfdeskfiles[1]}" <<-EOF
 		[Desktop Entry]
 		Version=1.0
 		Type=Directory
@@ -564,7 +568,7 @@ install_irpf() {
 		Icon=$iconname
 	EOF
 
-	cat > "$desktopdir"/"$vendor"-"${irpfbase}".desktop <<-EOF
+	cat > "${irpfdeskfiles[-1]}" <<-EOF
 		[Desktop Entry]
 		Version=1.0
 		Type=Application
@@ -575,14 +579,9 @@ install_irpf() {
 		Icon=$iconname
 	EOF
 
-	local irpfdeskfiles=(
-		"$desktopdir"/"$vendor"-ProgramasRFB.directory
-		"$desktopdir"/"$vendor"-"${irpfbase}".directory
-		"$desktopdir"/"$vendor"-"${irpfbase}".desktop
-	)
-
 	if ((helpmenu)); then
-		cat > "$desktopdir"/"$vendor"-"${irpfbase}"-ajuda.desktop <<-EOF
+		irpfdeskfiles+=("$deskprefix"-ajuda.desktop)
+		cat > "${irpfdeskfiles[-1]}" <<-EOF
 			[Desktop Entry]
 			Version=1.0
 			Type=Application
@@ -592,11 +591,11 @@ install_irpf() {
 			Exec=xdg-open '${irpfdir}/help/AjudaIRPF.pdf'
 			Icon=$iconname
 		EOF
-		irpfdeskfiles+=("$desktopdir"/"$vendor"-"${irpfbase}"-ajuda.desktop)
 	fi
 
 	if ((readmemenu)); then
-		cat > "$desktopdir"/"$vendor"-"${irpfbase}"-leiame.desktop <<-EOF
+		irpfdeskfiles+=("$deskprefix"-leiame.desktop)
+		cat > "${irpfdeskfiles[-1]}" <<-EOF
 			[Desktop Entry]
 			Version=1.0
 			Type=Application
@@ -606,7 +605,6 @@ install_irpf() {
 			Exec=xdg-open '${irpfdir}/Leia-me.htm'
 			Icon=$iconname
 		EOF
-		irpfdeskfiles+=("$desktopdir"/"$vendor"-"${irpfbase}"-leiame.desktop)
 	fi
 
 	install_menus "${irpfdeskfiles[@]}"
