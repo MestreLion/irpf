@@ -232,7 +232,7 @@ fi
 
 if ((year < minyear)); then
 	argerr "Para anos entre $oldyear e $((minyear-1))," \
-		" utilize a versão antiga, install.old"
+		" utilize a versão antiga do instalador, install.old"
 fi
 
 if ((year > maxyear)) || ((year < minyear)); then
@@ -314,9 +314,11 @@ purge(){
 uninstall_check_dir() {
 	local checkdir=$1
 	local name=${2:-}
-	if ! [[ -d "$checkdir" ]]; then
+
+	if ! ((force)) && ! [[ -d "$checkdir" ]]; then
 		echo "Pasta ${name:+$name }'$checkdir' não existe." \
 			"O programa já foi removido antes?" >&2
+		echo "Use --force para forçar limpeza de ícones e menus" >&2
 		return 1
 	fi
 }
@@ -469,8 +471,8 @@ install_menus() {
 # See https://bugs.freedesktop.org/show_bug.cgi?id=66605
 # and https://bugs.freedesktop.org/show_bug.cgi?id=69339
 patch_xdg() {
-	if [[ -r "$xdg_desktop_menu" ]] || ! [[ -d "$rootdir" ]]; then
-		# Assume it's already patched or not needed
+	if [[ -r "$xdg_desktop_menu" ]]; then
+		# Assume it's already patched
 		return
 	fi
 
@@ -480,6 +482,7 @@ patch_xdg() {
 			" Instale o pacote xdg-utils."
 
 	# Copy and patch only the known buggy version, otherwise symlink it
+	mkdir -p "${xdg_desktop_menu%/*}/"
 	if [[ "$("$xdgdesktopmenu" --version | cut -d' ' -f2)" == "$version" ]]
 	then
 		{ cat - "$xdgdesktopmenu" <<-EOF
