@@ -522,6 +522,10 @@ patch_xdg() {
 install_root() {
 	local icon
 
+	if !((force)) && [[ -d "$desktopdir" ]]; then
+		return
+	fi
+
 	message "Criando ícone e menu principal"
 
 	mkdir -p "$desktopdir"
