@@ -267,16 +267,16 @@ if ((verbose)); then
 	fi
 	if !((purge)); then
 		if ((irpf)); then
-			echo "Programa do IRPF:   $(bold $year)"
+			echo "Programa do IRPF:   $(green $year)"
 		else
-			echo "Programa do IRPF:   Não"
+			echo "Programa do IRPF:   $(red Não)"
 		fi
 			echo "Receitanet:         $(yesno $receitanet)"
 		if !((uninstall)); then
 			echo "Ícones no Desktop:  $(yesno $desktop)"
 			echo "Inclui menu Ajuda:  $(yesno $helpmenu)"
 			echo "Inclui menu Leiame: $(yesno $readmemenu)"
-			echo "Pasta Downloads:    $download"
+			echo "Pasta downloads:    $download"
 		fi
 	fi
 			echo "Pasta principal:    $rootdir"
