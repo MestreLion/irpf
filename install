@@ -288,6 +288,11 @@ purge(){
 	local folder
 	local iconsize
 
+	if ! uninstall_check_dir "$rootdir" "principal"; then
+		return
+	fi
+
+	shopt -s nullglob
 	for folder in "$rootdir"/"$irpfprefix"*; do
 		uninstall_irpf "$(basename "$folder")"
 	done
@@ -304,6 +309,16 @@ purge(){
 
 	# Diretorio raiz
 	rm -rf "$rootdir"
+}
+
+uninstall_check_dir() {
+	local checkdir=$1
+	local name=${2:-}
+	if ! [[ -d "$checkdir" ]]; then
+		echo "Pasta ${name:+$name }'$checkdir' não existe." \
+			"O programa já foi removido antes?" >&2
+		return 1
+	fi
 }
 
 uninstall_menus() {
@@ -327,6 +342,10 @@ uninstall_receitanet() {
 
 	message "Removendo Receitanet"
 
+	if ! uninstall_check_dir "$receitanetdir" "do Receitanet"; then
+		return
+	fi
+
 	# Receitanet - atalhos
 	uninstall_menus "${deskfiles[@]}"
 
@@ -348,6 +367,7 @@ uninstall_receitanet() {
 
 uninstall_irpf() {
 	local base="$1"
+	local irpfdir="$rootdir"/"$base"
 	local deskfiles=(
 		"${rootmenu##*/}"
 		"$vendor"-"${irpfbase,,}"{.directory,{,-{ajuda,leiame}}.desktop}
@@ -355,11 +375,15 @@ uninstall_irpf() {
 
 	message "Removendo $base"
 
+	if ! uninstall_check_dir "$irpfdir" "do $base"; then
+		return
+	fi
+
 	# Remove atalhos do menu e do desktop
 	uninstall_menus "${deskfiles[@]}"
 
 	# Remove o diretorio
-	rm -rf "$rootdir"/"$base"
+	rm -rf "$irpfdir"
 }
 
 # Install helpers -------------------------------------------------------------
