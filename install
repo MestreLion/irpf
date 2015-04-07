@@ -80,6 +80,7 @@ recver=""
 regver=""
 regpaths=('br/gov/serpro/receitanet'{,'/suite'})
 progname=""
+progdir=""
 uninstaller=0
 
 checksumfile="$mydir"/sha256sum.txt
@@ -294,27 +295,33 @@ iconname="${vendor}-${iconprefix}"
 # Summary and confirmation ----------------------------------------------------
 
 if ((verbose)); then
-	message "Opções selecionadas:"
+	if !((uninstaller)); then
+		message "Opções selecionadas:"
+	fi
 	if ((purge)); then
-		echo $(red "REMOVER TODOS OS PROGRAMAS")
+		echo $(red "! REMOVER TODOS OS PROGRAMAS DA RECEITA FEDERAL")
 	elif ((uninstall)); then
-		echo $(red "REMOVER${progname:+ ${progname^^}}")
+		echo $(red "! REMOVER${progname:+ ${progname^^}}")
 	fi
-	if !((purge)); then
+	if !((purge)) && !((uninstaller)); then
 		if ((irpf)); then
-			echo "Programa do IRPF:   $(green $year)"
+			echo "- Programa do IRPF:   $(green $year)"
 		else
-			echo "Programa do IRPF:   $(red Não)"
+			echo "- Programa do IRPF:   $(red Não)"
 		fi
-			echo "Receitanet:         $(yesno $receitanet)"
+			echo "- Receitanet:         $(yesno $receitanet)"
 		if !((uninstall)); then
-			echo "Ícones no Desktop:  $(yesno $desktop)"
-			echo "Inclui menu Ajuda:  $(yesno $helpmenu)"
-			echo "Inclui menu Leiame: $(yesno $readmemenu)"
-			echo "Pasta downloads:    $download"
+			echo "- Ícones no Desktop:  $(yesno $desktop)"
+			echo "- Inclui menu Ajuda:  $(yesno $helpmenu)"
+			echo "- Inclui menu Leiame: $(yesno $readmemenu)"
+			echo "- Pasta downloads:    $download"
 		fi
 	fi
-			echo "Pasta principal:    $rootdir"
+	if ((uninstaller)); then
+			echo "- Pasta de instalação: $progdir"
+	else
+			echo "- Pasta principal:    $rootdir"
+	fi
 fi
 confirm
 linefeed
@@ -431,16 +438,17 @@ uninstall_irpf() {
 }
 
 create_uninstaller() {
-	local script=$1/uninstall
-	local ptype=$2
-	case "$ptype" in
+	local progdir_=$1
+	local progtype=$2
+	local script=$progdir_/uninstall
+	case "$progtype" in
 	root)
 		local year_=$year
 		local purge_=1
 		local uninstall_=0
 		local irpf_=0
 		local receitanet_=0
-		local progname_="todos os programas da Receita"
+		local progname_="todos os programas da Receita Federal"
 	;;
 	receitanet)
 		local year_=$year
@@ -467,6 +475,7 @@ create_uninstaller() {
 		-v year=$year              \
 		-v receitanet=$receitanet_ \
 		-v "progname=${progname_//\"/\\\\\"}" \
+		-v "progdir=${progdir_//\"/\\\\\"}"   \
 		-v "rootdir=${rootdir//\"/\\\\\"}"    \
 		'
 		/^uninstaller=/ {print "uninstaller=" 1;             next}
@@ -476,6 +485,7 @@ create_uninstaller() {
 		/^year=/        {print "year="        year;          next}
 		/^receitanet=/  {print "receitanet="  receitanet;    next}
 		/^progname=/    {print "progname=\""  progname "\""; next}
+		/^progdir=/     {print "progdir=\""   progdir "\"";  next}
 		/^rootdir=/     {print "rootdir=\""   rootdir "\"";  next}
 
 		/^[ \t#:]*--uinst-start[ \t]*)/ { remove=1 }
