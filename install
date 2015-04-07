@@ -137,7 +137,7 @@ admistrativos (root).
 Testado com todos os programas da Receita desde 2008.
 
 Opções gerais:
-  -h|--help  - Exibe esta página.
+  -h|--help  - Exibe esta página de ajuda.
   -q|--quiet - Não exibe mensagens informativas, como o progresso da instalação.
   -y|--yes   - Automaticamente responde SIM a todas as perguntas de confirmação.
   -f|--force - Força ações mesmo que sejam redundantes, por exemplo instalação
@@ -366,7 +366,7 @@ uninstall_receitanet() {
 		return
 	fi
 
-	message "Removendo Receitanet"
+	message "Removendo o Receitanet"
 
 	# Receitanet - atalhos
 	uninstall_menus "${deskfiles[@]}"
@@ -392,10 +392,10 @@ uninstall_irpf() {
 	local irpfdir="$rootdir"/"$base"
 	local deskfiles=(
 		"${rootmenu##*/}"
-		"$vendor"-"${irpfbase,,}"{.directory,{,-{ajuda,leiame}}.desktop}
+		"$vendor"-"${base,,}"{.directory,{,-{ajuda,leiame}}.desktop}
 	)
 
-	message "Removendo $base"
+	message "Removendo o $base"
 
 	if ! uninstall_check_dir "$irpfdir" "do $base"; then
 		return
@@ -429,7 +429,7 @@ download_archive() {
 	if [[ "$atype" == 'recnet' ]]; then
 		name="a última versão do ReceitaNet"
 	else
-		name="o IRPF de $atype"
+		name="o $irpfprefix $atype"
 	fi
 
 	while IFS="	" read -r -s ftype cksum url version reg; do
@@ -559,7 +559,7 @@ install_receitanet() {
 	empty_dir "$receitanetdir"
 	download_archive 'recnet'
 
-	message "Instalando Receitanet $recver"
+	message "Instalando o Receitanet $recver"
 
 	dpkg-deb --fsys-tarfile "$archive" |
 	tar -x --strip-components 4 --directory "$receitanetdir" \
@@ -636,7 +636,7 @@ install_irpf() {
 	empty_dir "$irpfdir"
 	download_archive "$year"
 
-	message "Instalando $irpfprefix $year"
+	message "Instalando o $irpfprefix $year"
 
 	# Extract the zip file.
 	# Cannot extract directly to $rootdir as not all zips have top-level dir
