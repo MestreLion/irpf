@@ -79,6 +79,8 @@ javacmd=(/usr/bin/java -Xms128m -Xmx256m -jar)
 recver=""
 regver=""
 regpaths=('br/gov/serpro/receitanet'{,'/suite'})
+progname=""
+uninstaller=0
 
 checksumfile="$mydir"/sha256sum.txt
 
@@ -125,6 +127,22 @@ usage() {
 		Tente '$myname --help' para mais informações.
 		USAGE
 		exit 1
+	fi
+	if ((uninstaller)); then
+		cat <<- USAGE
+Remove $progname
+
+Opções gerais:
+  -h|--help  - Exibe esta ajuda.
+  -q|--quiet - Não exibe mensagens informativas, como o progresso da remoção.
+  -y|--yes   - Remove automaticamente, sem perguntas de confirmação.
+  -f|--force - Força a remoção mesmo caso a pasta dos arquivos não exista mais,
+               garantindo a limpeza de eventuais ícones e entradas de menu.
+
+Copyright (C) 2015 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+Licença: GPLv3 ou posterior. Consulte <http://www.gnu.org/licenses/gpl.html>
+		USAGE
+		exit
 	fi
 	cat <<USAGE
 
@@ -205,6 +223,8 @@ while (( $# )); do
 	-q|--quiet	) verbose=0;;
 	-y|--yes	) yes=1;;
 	-f|--force	) force=1;;
+	--uinst-start	) invalid "$1";;
+
 	--uninstall	) uninstall=1;;
 	--uninstall-all	) purge=1;;
 	--menu-ajuda	) helpmenu=1;;
@@ -220,6 +240,8 @@ while (( $# )); do
 
 	--irpf=*	) year="${1#*=}"; irpf=1;;
 	--irpf  	) shift; year="${1:-}"; irpf=1;;
+
+	--uinst-end	) invalid "$1";;
 
 	*) invalid "$1"; break  ;;
 	esac
@@ -276,7 +298,7 @@ if ((verbose)); then
 	if ((purge)); then
 		echo $(red "REMOVER TODOS OS PROGRAMAS")
 	elif ((uninstall)); then
-		echo $(red "REMOVER")
+		echo $(red "REMOVER${progname:+ ${progname^^}}")
 	fi
 	if !((purge)); then
 		if ((irpf)); then
@@ -406,6 +428,62 @@ uninstall_irpf() {
 
 	# Remove o diretorio
 	rm -rf "$irpfdir"
+}
+
+create_uninstaller() {
+	local script=$1/uninstall
+	local ptype=$2
+	case "$ptype" in
+	root)
+		local year_=$year
+		local purge_=1
+		local uninstall_=0
+		local irpf_=0
+		local receitanet_=0
+		local progname_="todos os programas da Receita"
+	;;
+	receitanet)
+		local year_=$year
+		local purge_=0
+		local uninstall_=1
+		local irpf_=0
+		local receitanet_=1
+		local progname_="o Receitanet"
+	;;
+	irpf)
+		local year_=$3
+		local purge_=0
+		local uninstall_=1
+		local irpf_=1
+		local receitanet_=0
+		local progname_="o $irpfprefix $year_"
+	;;
+	esac
+	message "Gerando script de remoção para $progname_"
+	awk \
+		-v purge=$purge_           \
+		-v uninstall=$uninstall_   \
+		-v irpf=$irpf_             \
+		-v year=$year              \
+		-v receitanet=$receitanet_ \
+		-v "progname=${progname_//\"/\\\\\"}" \
+		-v "rootdir=${rootdir//\"/\\\\\"}"    \
+		'
+		/^uninstaller=/ {print "uninstaller=" 1;             next}
+		/^purge=/       {print "purge="       purge;         next}
+		/^uninstall=/   {print "uninstall="   uninstall;     next}
+		/^irpf=/        {print "irpf="        irpf;          next}
+		/^year=/        {print "year="        year;          next}
+		/^receitanet=/  {print "receitanet="  receitanet;    next}
+		/^progname=/    {print "progname=\""  progname "\""; next}
+		/^rootdir=/     {print "rootdir=\""   rootdir "\"";  next}
+
+		/^[ \t#:]*--uinst-start[ \t]*)/ { remove=1 }
+		! remove {print}
+		/^[ \t#:]*--uinst-end[ \t]*)/   { remove=0 }
+		' \
+		"$0" > "$script"
+	chmod +x "$script"
 }
 
 # Install helpers -------------------------------------------------------------
@@ -553,6 +631,8 @@ install_root() {
 		xdg-icon-resource install --noupdate \
 			--size "$iconsize" "$icon" "$iconname"
 	done
+
+	create_uninstaller "$rootdir" root
 }
 
 install_receitanet() {
@@ -630,6 +710,7 @@ install_receitanet() {
 	fi
 
 	install_menus "${recnetdeskfiles[@]}"
+	create_uninstaller "$receitanetdir" receitanet
 }
 
 install_irpf() {
@@ -705,6 +786,7 @@ install_irpf() {
 	fi
 
 	install_menus "${irpfdeskfiles[@]}"
+	create_uninstaller "$irpfdir" irpf "$year"
 }
 
 # Main procedures and logic ---------------------------------------------------
