@@ -69,8 +69,7 @@ readmemenu=0
 myname=${0##*/}
 mydir=$(dirname "$(readlink -f "$0")")
 
-oldyear=2008
-minyear=2015
+minyear=2008
 maxyear=$year
 receitanet=0
 irpf=0
@@ -268,11 +267,6 @@ elif !((receitanet)) && !((irpf)); then
 		receitanet=1
 		irpf=1
 	fi
-fi
-
-if ((year < minyear)); then
-	argerr "Para anos entre $oldyear e $((minyear-1))," \
-		" utilize a versão antiga do instalador, install.old"
 fi
 
 if ((year > maxyear)) || ((year < minyear)); then
@@ -748,6 +742,7 @@ install_irpf() {
 	tar --directory="$irpfdir" -x --strip-components=2
 	rm -rf "$tempdir"
 
+	# Default for all years
 	local irpfjar="$irpfdir"/irpf.jar
 	local helpfile="$irpfdir"/help/AjudaIRPF.pdf
 	local readmefile="$irpfdir"/Leia-me.htm
@@ -755,6 +750,24 @@ install_irpf() {
 	local irpfexec=("${javacmd[@]}" "$(ppath "$irpfjar")")
 	local helpexec=(  xdg-open      "$(ppath "$helpfile")")
 	local readmeexec=(xdg-open      "$(ppath "$readmefile")")
+
+	# Handle variations from each year
+
+	# Until 2014 'Ajuda' menu was the same as in-program 'Ajuda'->'Conteudo'
+	if ! [[ -f "$helpfile" ]]; then
+		helpexec=("${irpfexec[@]}" -h)
+	fi
+	# In 2009...2011 (but not 2008), 'Leia-me' file was misspeled with '_'
+	if [[ -f "$irpfdir"/Leia_me.htm ]]; then
+		mv -f "$irpfdir"/Leia_me.htm "$readmefile"
+	fi
+	# In 2008, irpf.jar file was uppercase
+	if [[ -f "$irpfdir"/IRPF.jar ]]; then
+		mv -f "$irpfdir"/IRPF.jar "$irpfjar"
+	fi
+
+	# Remove zip cruft
+	rm -f "$irpfdir"/{*.{bat,sh,exe},Execute.txt}
 
 	local deskprefix="$desktopdir"/"$vendor"-"${irpfbase,,}"
 	local irpfdeskfiles=(
