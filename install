@@ -101,6 +101,7 @@ integer() { [[ "${1:-}" != *[!0-9]* ]] ||
 yesno()   { if (($1)); then green "Sim"; else red "Não"; fi; }
 linefeed(){ ((verbose)) && echo; }
 cmdpath() { type -P "$1"; }
+ppath()   { printf '%q' "$@"; }
 
 confirm()
 {
@@ -670,6 +671,11 @@ install_receitanet() {
 		java -jar "$regjar" "${regargs[@]}" || true
 	done
 
+	local recnetexec=(
+		"${javacmd[@]}"
+		"$(ppath "${receitanetdir}/receitanet.jar")"
+	)
+
 	local deskprefix="$desktopdir"/"$vendor"-receitanet
 	local recnetdeskfiles=(
 		"$rootmenu"
@@ -689,7 +695,7 @@ install_receitanet() {
 		Version=1.0
 		Type=Application
 		Terminal=false
-		Exec=${javacmd[@]} '${receitanetdir}/receitanet.jar'
+		Exec=${recnetexec[@]}
 		Name=Receitanet $recver
 		Comment=Imposto de Renda - Receitanet
 		GenericName=Receita Federal
@@ -708,7 +714,7 @@ install_receitanet() {
 			Version=1.0
 			Type=Application
 			Terminal=false
-			Exec=${javacmd[@]} '${receitanetdir}/receitanet.jar' -ajuda
+			Exec=${recnetexec[@]} -ajuda
 			Name=Ajuda do Receitanet $recver
 			GenericName=Receita Federal
 			Icon=$vendor-receitanet-ajuda
@@ -742,6 +748,14 @@ install_irpf() {
 	tar --directory="$irpfdir" -x --strip-components=2
 	rm -rf "$tempdir"
 
+	local irpfjar="$irpfdir"/irpf.jar
+	local helpfile="$irpfdir"/help/AjudaIRPF.pdf
+	local readmefile="$irpfdir"/Leia-me.htm
+
+	local irpfexec=("${javacmd[@]}" "$(ppath "$irpfjar")")
+	local helpexec=(  xdg-open      "$(ppath "$helpfile")")
+	local readmeexec=(xdg-open      "$(ppath "$readmefile")")
+
 	local deskprefix="$desktopdir"/"$vendor"-"${irpfbase,,}"
 	local irpfdeskfiles=(
 		"$rootmenu"
@@ -763,7 +777,7 @@ install_irpf() {
 		Name=${irpfbase^^} - Declaração Anual
 		Comment=Imposto de Renda $year
 		GenericName=Receita Federal
-		Exec=${javacmd[@]} '${irpfdir}/irpf.jar'
+		Exec=${irpfexec[@]}
 		Icon=$iconname
 	EOF
 
@@ -776,7 +790,7 @@ install_irpf() {
 			Name=Ajuda do ${irpfbase^^}
 			Comment=Imposto de Renda $year
 			GenericName=Receita Federal
-			Exec=xdg-open '${irpfdir}/help/AjudaIRPF.pdf'
+			Exec=${helpexec[@]}
 			Icon=$iconname
 		EOF
 	fi
@@ -790,7 +804,7 @@ install_irpf() {
 			Name=Leia-me do ${irpfbase^^}
 			Comment=Imposto de Renda $year
 			GenericName=Receita Federal
-			Exec=xdg-open '${irpfdir}/Leia-me.htm'
+			Exec=${readmeexec[@]}
 			Icon=$iconname
 		EOF
 	fi
