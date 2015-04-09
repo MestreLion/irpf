@@ -73,10 +73,10 @@ minyear=2008
 maxyear=$year
 receitanet=0
 irpf=0
-archive=""
+archivefile=""
+archiveversion=""
+archivereg=""
 javacmd=(java -Xms128m -Xmx512m -jar)
-recver=""
-regver=""
 regpaths=('br/gov/serpro/receitanet'{,'/suite'})
 progname=""
 progdir=""
@@ -494,8 +494,8 @@ create_uninstaller() {
 # Install helpers -------------------------------------------------------------
 
 download_archive() {
-	local atype="$1"
-	local ftype
+	local archivetype="$1"
+	local filetype
 	local cksum
 	local url
 	local basefile
@@ -509,20 +509,21 @@ download_archive() {
 		q+=(--quiet)
 	fi
 
-	if [[ "$atype" == 'recnet' ]]; then
+	if [[ "$archivetype" == 'recnet' ]]; then
 		name="a última versão do ReceitaNet"
 	else
-		name="o $irpfprefix $atype"
+		name="o $irpfprefix $archivetype"
 	fi
 
-	while IFS="	" read -r -s ftype cksum url version reg; do
+	while IFS="	" read -r -s filetype cksum url version reg; do
 		if [[ -z "$url" ]]            ||
 		   [[ -z "$version" ]]        ||
 		   [[ "$url" == "file://"* ]] ||
-		 ! [[ "$ftype" == "$atype" ]]
+		 ! [[ "$filetype" == "$archivetype" ]]
 		then
 			continue
 		fi
+
 		basefile="${url##*/}"
 		path="$download"/"$basefile"
 		message "Baixando $name: $basefile"
@@ -531,15 +532,16 @@ download_archive() {
 		message "Verificando integridade do arquivo" &&
 		sha256sum "${q[@]:+${q[@]}}" --check - <<< "$cksum  $path" ||
 		fatal "Erro no download d$name de $url"
-		archive=$path    # ugly use of a global var as return value
+
+		# Found and downloaded. Set "return value" globals
+		archivefile=$path
+		archiveversion=$version
+		archivereg=$reg
 		break
 	done < <(grep -v '^#' "$checksumfile" | LC_ALL=C sort -r -f -k 3)
-	if [[ -z "$archive" ]]; then
+
+	if [[ -z "$archivefile" ]]; then
 		fatal "O arquivo para $name ainda não foi cadastrado!"
-	fi
-	if [[ "$atype" == 'recnet' ]]; then
-		recver=$version  # ditto
-		regver=$reg
 	fi
 }
 
@@ -648,9 +650,9 @@ install_receitanet() {
 	empty_dir "$receitanetdir"
 	download_archive 'recnet'
 
-	message "Instalando o Receitanet $recver"
+	message "Instalando o Receitanet $archiveversion"
 
-	dpkg-deb --fsys-tarfile "$archive" |
+	dpkg-deb --fsys-tarfile "$archivefile" |
 	tar -x --strip-components 4 --directory "$receitanetdir" \
 		'./opt/Programas RFB/Receitanet/'
 
@@ -661,7 +663,7 @@ install_receitanet() {
 		Path "$receitanetdir"
 		Origem A
 		Tipo suite
-		Versao "$regver"
+		Versao "$archivereg"
 		Instalacao D
 	)
 	for regpath in "${regpaths[@]}"; do
@@ -694,7 +696,7 @@ install_receitanet() {
 		Type=Application
 		Terminal=false
 		Exec=${recnetexec[@]}
-		Name=Receitanet $recver
+		Name=Receitanet $archiveversion
 		Comment=Imposto de Renda - Receitanet
 		GenericName=Receita Federal
 		Icon=$vendor-receitanet
@@ -713,7 +715,7 @@ install_receitanet() {
 			Type=Application
 			Terminal=false
 			Exec=${recnetexec[@]} -ajuda
-			Name=Ajuda do Receitanet $recver
+			Name=Ajuda do Receitanet $archiveversion
 			GenericName=Receita Federal
 			Icon=$vendor-receitanet-ajuda
 		EOF
@@ -741,7 +743,7 @@ install_irpf() {
 	# extract it on-the-fly to final destination.
 	local tempdir="$download"/temp
 	rm -rf "$tempdir"
-	unzip -q "$archive" -d "$tempdir"
+	unzip -q "$archivefile" -d "$tempdir"
 	tar --directory "$tempdir" -c . |
 	tar --directory="$irpfdir" -x --strip-components=2
 	rm -rf "$tempdir"
