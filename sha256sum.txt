@@ -4,22 +4,22 @@
 #
 # Algumas versões não estão mais disponíveis, e por isto foram comentadas
 #
-2008	acfb0a1856d84e1306c1b140f1aaf1f4579330d3b49e2a0d1d67980fe60e4643	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2008/PGDIrpf2008/Java/ZIP/irpf2008v3.1.zip
-2009	d88164c4ffc1ef2bc8f7e98f6f81f152bdd548e9aa476a937e2f24353d21f94f	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.0.zip
-2009	47fa7241de610b2570dc5faf22e9cbc5253e7f5583288c95df2528054e813a57	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.1.zip
-2010	8d598224f2f68a2908cb121149a0097dc67a3db66c2136702209a8146dd02f1b	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2010/PGDIrpf2010/Java/zip/irpf2010v1.2.zip
-2010	95b977ae9a804599eba92ded52a19c7ae34d6f2947d78f7ae0bb52bdfc33d9f1	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2010/PGDIrpf2010/Java/zip/irpf2010v1.3.zip
-2011	fc66cc8a43f733bc809197cd9496491a668e95340a6c18c79e4e8b674ea61f24	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2011/PGDIRPF2011/Java/zip/IRPF2011v1.2.zip
-2011	e6b44fb751f39f356da6939f39de35c518fd81fbb5fe5993ec79445e67a809d5	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2011/PGDIRPF2011/Java/zip/IRPF2011v1.3.zip
-#2012	9130d646ccefcdd2eae27e0d08fbaba402823ddf6239298f2f840c445b010824	IRPF2012-1.0.zip
-2012	ed7e01a86c0c494326499038061d2679d33086de196b6028311873c07aba81e9	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2012/PGDIRPF2012/Java/zip/IRPF2012-1.1.zip
-2012	22cd0bb4b0f58867a8ef0803a453c9b9a4b84827b1111171cc83ef2bcf3871a8	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2012/PGDIRPF2012/Java/zip/IRPF2012-1.3.zip
-#2013	113c25801fd362e375f39e963a66999670bd3197be8f516b219161b94f9f6f82	IRPF2013-1.0.zip
-2013	5669fba9501fbf461e9c8997bcd0754338e7400a7bb2ccefe0fe2a96dc08e638	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2013/PGDIRPF2013/Java/zip/IRPF2013-1.1.zip
-2013	5de54e812ff4e98bf740e9105051490d4762b17888d3406146e2c426d174b9f2	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2013/PGDIRPF2013/Java/zip/IRPF2013-1.5.zip
-#2014	cd1c9aba6d3e149f6fc8e85436032ec558aaaa3632123f87e476b9c127dc7464	IRPF2014-1.1.zip
-2014	97be4f3cfcf4a7e95e1790071e4186c401057a01f280d467c3b7e601c5646b8e	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2014/PGDIRPF2014/Java/zip/IRPF2014-1.6.zip
-2015	46518d12ec5bb6b3aeabbd2c4975213096d026e05f574d75efb6dfaf0f9cd75b	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.1.zip
+2008	acfb0a1856d84e1306c1b140f1aaf1f4579330d3b49e2a0d1d67980fe60e4643	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2008/PGDIrpf2008/Java/ZIP/irpf2008v3.1.zip	3.1
+2009	d88164c4ffc1ef2bc8f7e98f6f81f152bdd548e9aa476a937e2f24353d21f94f	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.0.zip	2.0
+2009	47fa7241de610b2570dc5faf22e9cbc5253e7f5583288c95df2528054e813a57	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.1.zip	2.1
+2010	8d598224f2f68a2908cb121149a0097dc67a3db66c2136702209a8146dd02f1b	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2010/PGDIrpf2010/Java/zip/irpf2010v1.2.zip	1.2
+2010	95b977ae9a804599eba92ded52a19c7ae34d6f2947d78f7ae0bb52bdfc33d9f1	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2010/PGDIrpf2010/Java/zip/irpf2010v1.3.zip	1.3
+2011	fc66cc8a43f733bc809197cd9496491a668e95340a6c18c79e4e8b674ea61f24	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2011/PGDIRPF2011/Java/zip/IRPF2011v1.2.zip	1.2
+2011	e6b44fb751f39f356da6939f39de35c518fd81fbb5fe5993ec79445e67a809d5	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2011/PGDIRPF2011/Java/zip/IRPF2011v1.3.zip	1.3
+2012	9130d646ccefcdd2eae27e0d08fbaba402823ddf6239298f2f840c445b010824	file://IRPF2012-1.0.zip	1.0
+2012	ed7e01a86c0c494326499038061d2679d33086de196b6028311873c07aba81e9	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2012/PGDIRPF2012/Java/zip/IRPF2012-1.1.zip	1.1
+2012	22cd0bb4b0f58867a8ef0803a453c9b9a4b84827b1111171cc83ef2bcf3871a8	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2012/PGDIRPF2012/Java/zip/IRPF2012-1.3.zip	1.3
+2013	113c25801fd362e375f39e963a66999670bd3197be8f516b219161b94f9f6f82	file://IRPF2013-1.0.zip	1.0
+2013	5669fba9501fbf461e9c8997bcd0754338e7400a7bb2ccefe0fe2a96dc08e638	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2013/PGDIRPF2013/Java/zip/IRPF2013-1.1.zip	1.1
+2013	5de54e812ff4e98bf740e9105051490d4762b17888d3406146e2c426d174b9f2	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2013/PGDIRPF2013/Java/zip/IRPF2013-1.5.zip	1.5
+2014	cd1c9aba6d3e149f6fc8e85436032ec558aaaa3632123f87e476b9c127dc7464	file://IRPF2014-1.1.zip	1.1
+2014	97be4f3cfcf4a7e95e1790071e4186c401057a01f280d467c3b7e601c5646b8e	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2014/PGDIRPF2014/Java/zip/IRPF2014-1.6.zip	1.6
+2015	46518d12ec5bb6b3aeabbd2c4975213096d026e05f574d75efb6dfaf0f9cd75b	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.1.zip	1.1
 
 # A versão DEB mais recente pode ser encontrada em:
 #
@@ -29,8 +29,8 @@
 #
 # A versão mais recente do Receitanet funciona com o IRPF de todos os anos
 #
-#recnet	6ece0a2ecc98a51e49099ae19239a167cd708c76b696d5b80ef2cbf3b95ef8d1	receitanet-1.01.deb
-#recnet	77cbe3cc119727930da026b248598bdd87f034c4ca06f56e0f42c039f117b527	receitanet-1.03.deb
+recnet	6ece0a2ecc98a51e49099ae19239a167cd708c76b696d5b80ef2cbf3b95ef8d1	file://receitanet-1.01.deb	1.01
+recnet	77cbe3cc119727930da026b248598bdd87f034c4ca06f56e0f42c039f117b527	file://receitanet-1.03.deb	1.03
 recnet	75dcaa9b12613d0ef051f660de2f56b47a7dc164f033adfc3e52a3e011c757b2	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.04.deb	1.04	201104
 recnet	a6678e80d7a931e2923692f20b3cfa687b55475b7a1513235b46301280014467	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.05.deb	1.05	201105
 recnet	d468b9650bdce21384a2179da9e5336c49afbc25cb6d040d22fba9b086ec327a	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.06.deb	1.06	201106

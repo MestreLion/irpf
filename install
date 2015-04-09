@@ -516,7 +516,11 @@ download_archive() {
 	fi
 
 	while IFS="	" read -r -s ftype cksum url version reg; do
-		if [[ -z "$url" ]] || ! [[ "$ftype" == "$atype" ]]; then
+		if [[ -z "$url" ]]            ||
+		   [[ -z "$version" ]]        ||
+		   [[ "$url" == "file://"* ]] ||
+		 ! [[ "$ftype" == "$atype" ]]
+		then
 			continue
 		fi
 		basefile="${url##*/}"
