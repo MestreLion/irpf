@@ -483,9 +483,9 @@ create_uninstaller() {
 		/^progdir=/     {print "progdir=\""   progdir "\"";  next}
 		/^rootdir=/     {print "rootdir=\""   rootdir "\"";  next}
 
-		/^[ \t#:]*--uinst-start[ \t]*)/ { remove=1 }
+		/^[ \t#:]*--uinst-start[ \t]*\)/ { remove=1 }
 		! remove {print}
-		/^[ \t#:]*--uinst-end[ \t]*)/   { remove=0 }
+		/^[ \t#:]*--uinst-end[ \t]*\)/   { remove=0 }
 		' \
 		"$0" > "$script"
 	chmod +x "$script"
