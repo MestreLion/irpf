@@ -572,6 +572,16 @@ install_menus() {
 	fi
 }
 
+check_version() {
+	local versionfile=$1
+	local progversion=${2:-}
+	if [[ -f "$versionfile" ]]; then
+		cat "$versionfile"
+	elif [[ -d "${versionfile%/*}/" ]]; then
+		echo "$progversion" > "$versionfile"
+	fi
+}
+
 # Install functions -----------------------------------------------------------
 
 # Patch xdg-desktop-menu to fix bug when handling filenames with spaces
@@ -647,8 +657,11 @@ install_root() {
 }
 
 install_receitanet() {
-	empty_dir "$receitanetdir"
+	local versionfile="$receitanetdir"/version
+	echo $(check_version "$versionfile")
+
 	download_archive 'recnet'
+	empty_dir "$receitanetdir"
 
 	message "Instalando o Receitanet $archiveversion"
 
@@ -727,6 +740,7 @@ install_receitanet() {
 
 	install_menus "${recnetdeskfiles[@]}"
 	create_uninstaller "$receitanetdir" receitanet
+	check_version "$versionfile" "$archiveversion"
 }
 
 install_irpf() {
