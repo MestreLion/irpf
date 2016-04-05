@@ -2,9 +2,14 @@
 #
 # Programas de todos os anos podem ser baixados a partir de:
 #
-# http://www.receita.fazenda.gov.br/Download/ProgramasIRPF.htm
+# http://idg.receita.fazenda.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/dirpf/entrega-da-declaracao-do-irpf/download-programas-dirpf
 #
 # Algumas versões não estão mais disponíveis, e por isto foram desabilitadas utilizando URL no formato file://
+#
+# O protocolo HTTPS não é utilizado, apesar de estar presente nas URLs originais da Receita a partir de 2016,
+# uma vez que o certificado utilizado em receita.fazenda.gov.br é inválido em plataformas não-Windows,
+# pois a entidade emissora, "Autoridade Certificadora SERPRORFBv4, ICP-Brasil" não é reconhecida.
+# Para maiores detalhes, veja https://bugzilla.mozilla.org/show_bug.cgi?id=438825
 #
 2008	acfb0a1856d84e1306c1b140f1aaf1f4579330d3b49e2a0d1d67980fe60e4643	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2008/PGDIrpf2008/Java/ZIP/irpf2008v3.1.zip	3.1
 2009	d88164c4ffc1ef2bc8f7e98f6f81f152bdd548e9aa476a937e2f24353d21f94f	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.0.zip	2.0
@@ -24,13 +29,15 @@
 2015	46518d12ec5bb6b3aeabbd2c4975213096d026e05f574d75efb6dfaf0f9cd75b	file://IRPF2015-1.1.zip	1.1
 2015	54fc3faffc1a3307fa1b4c0c770fd18c046adc9a50944311960a9e6daf3025d1	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.2.zip	1.2
 2015	98d1fb58a06d9a18a36b7e25fe17a4a55cc75529bbdb023dc71faa62275745de	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.3.zip	1.3
+2016	4d12fc983e5a38f5f923b4b9a90b51be874b6114d9b825cda28a3acade7336c7	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.1.zip	1.1
+2016	fce9106d641c33c8046556cf12bc255c602982e09f1457f519ca8f10c64a2ad7	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.2.zip	1.2
 
 
 # Receitanet - Linux DEB
 #
-# http://www.receita.fazenda.gov.br/Pessoafisica/receitanet/recnet.htm
+# A versão mais recente pode ser encontrada em:
 #
-# Partir de 2015 a opção DEB não é mais apresentada na página de downloads
+# http://idg.receita.fazenda.gov.br/aplicativos/receitanet/download-do-programa-receitanet
 #
 # A versão mais recente do Receitanet funciona com o IRPF de todos os anos
 #
