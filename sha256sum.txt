@@ -1,8 +1,10 @@
+# IRPF - Multiplataforma (.zip)
+#
 # Programas de todos os anos podem ser baixados a partir de:
 #
 # http://www.receita.fazenda.gov.br/Download/ProgramasIRPF.htm
 #
-# Algumas versões não estão mais disponíveis, e por isto foram comentadas
+# Algumas versões não estão mais disponíveis, e por isto foram desabilitadas utilizando URL no formato file://
 #
 2008	acfb0a1856d84e1306c1b140f1aaf1f4579330d3b49e2a0d1d67980fe60e4643	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2008/PGDIrpf2008/Java/ZIP/irpf2008v3.1.zip	3.1
 2009	d88164c4ffc1ef2bc8f7e98f6f81f152bdd548e9aa476a937e2f24353d21f94f	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.0.zip	2.0
@@ -24,7 +26,7 @@
 2015	98d1fb58a06d9a18a36b7e25fe17a4a55cc75529bbdb023dc71faa62275745de	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.3.zip	1.3
 
 
-# A versão DEB mais recente pode ser encontrada em:
+# Receitanet - Linux DEB
 #
 # http://www.receita.fazenda.gov.br/Pessoafisica/receitanet/recnet.htm
 #

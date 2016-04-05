@@ -148,8 +148,8 @@ Licença: GPLv3 ou posterior. Consulte <http://www.gnu.org/licenses/gpl.html>
 
 Instalador para os programas da Receita Federal (IRPF e ReceitaNet)
 
-Inclui download dos programas, verificação de integridade, entradas de menu com
-ícones oficiais, instalação e remoção sem necessidade de privilégios
+Inclui download dos programas, verificação de integridade, entradas de menu
+com ícones oficiais, instalação e remoção sem necessidade de privilégios
 admistrativos (root).
 
 Testado com todos os programas da Receita desde 2008.
@@ -527,7 +527,8 @@ download_archive() {
 		path="$download"/"$basefile"
 		message "Baixando $name: $basefile"
 		mkdir -p "$download"
-		wget "${q[@]:+${q[@]}}" -P "$download" -N "$url" &&
+		wget "${q[@]:+${q[@]}}" --timestamping \
+			--directory-prefix="$download" -- "$url" &&
 		message "Verificando integridade do arquivo" &&
 		sha256sum "${q[@]:+${q[@]}}" --check - <<< "$cksum  $path" ||
 		fatal "Erro no download d$name de $url"
@@ -657,7 +658,6 @@ install_root() {
 
 install_receitanet() {
 	local versionfile="$receitanetdir"/version
-	echo $(check_version "$versionfile")
 
 	download_archive 'recnet'
 	empty_dir "$receitanetdir"
