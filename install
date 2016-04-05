@@ -70,7 +70,6 @@ myname=${0##*/}
 mydir=$(dirname "$(readlink -f "$0")")
 
 minyear=2008
-maxyear=$year
 receitanet=0
 irpf=0
 archivefile=""
@@ -269,8 +268,8 @@ elif !((receitanet)) && !((irpf)); then
 	fi
 fi
 
-if ((year > maxyear)) || ((year < minyear)); then
-	argerr "Ano deve estar entre $minyear e $maxyear"
+if ((irpf)) && ((year < minyear)); then
+	argerr "Ano deve ser a partir de $minyear"
 fi
 
 # Derived vars ----------------------------------------------------------------
@@ -438,7 +437,7 @@ create_uninstaller() {
 	local script=$progdir_/uninstall
 	case "$progtype" in
 	root)
-		local year_=$year
+		local year_=0
 		local purge_=1
 		local uninstall_=0
 		local irpf_=0
@@ -446,7 +445,7 @@ create_uninstaller() {
 		local progname_="todos os programas da Receita Federal"
 	;;
 	receitanet)
-		local year_=$year
+		local year_=0
 		local purge_=0
 		local uninstall_=1
 		local irpf_=0
@@ -467,7 +466,7 @@ create_uninstaller() {
 		-v purge=$purge_           \
 		-v uninstall=$uninstall_   \
 		-v irpf=$irpf_             \
-		-v year=$year              \
+		-v year=$year_             \
 		-v receitanet=$receitanet_ \
 		-v "progname=${progname_//\"/\\\\\"}" \
 		-v "progdir=${progdir_//\"/\\\\\"}"   \
