@@ -23,14 +23,18 @@
 2012	22cd0bb4b0f58867a8ef0803a453c9b9a4b84827b1111171cc83ef2bcf3871a8	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2012/PGDIRPF2012/Java/zip/IRPF2012-1.3.zip	1.3
 2013	113c25801fd362e375f39e963a66999670bd3197be8f516b219161b94f9f6f82	file://IRPF2013-1.0.zip	1.0
 2013	5669fba9501fbf461e9c8997bcd0754338e7400a7bb2ccefe0fe2a96dc08e638	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2013/PGDIRPF2013/Java/zip/IRPF2013-1.1.zip	1.1
+2013	43f90eea6151208edce824add2da5b85aec3ca6f401fe1c458d34a4b0889611a  	file://IRPF2013-1.2.zip	1.2
 2013	5de54e812ff4e98bf740e9105051490d4762b17888d3406146e2c426d174b9f2	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2013/PGDIRPF2013/Java/zip/IRPF2013-1.5.zip	1.5
 2014	cd1c9aba6d3e149f6fc8e85436032ec558aaaa3632123f87e476b9c127dc7464	file://IRPF2014-1.1.zip	1.1
 2014	97be4f3cfcf4a7e95e1790071e4186c401057a01f280d467c3b7e601c5646b8e	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2014/PGDIRPF2014/Java/zip/IRPF2014-1.6.zip	1.6
 2015	46518d12ec5bb6b3aeabbd2c4975213096d026e05f574d75efb6dfaf0f9cd75b	file://IRPF2015-1.1.zip	1.1
 2015	54fc3faffc1a3307fa1b4c0c770fd18c046adc9a50944311960a9e6daf3025d1	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.2.zip	1.2
 2015	98d1fb58a06d9a18a36b7e25fe17a4a55cc75529bbdb023dc71faa62275745de	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.3.zip	1.3
+2015	7829e3e00ff15d5c114ea15bb5af899c3e7650c9004e55cb96e8fb3638a509b1	http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.4.zip	1.4
 2016	4d12fc983e5a38f5f923b4b9a90b51be874b6114d9b825cda28a3acade7336c7	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.1.zip	1.1
 2016	fce9106d641c33c8046556cf12bc255c602982e09f1457f519ca8f10c64a2ad7	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.2.zip	1.2
+2016	978b42766e3c7dcf04b74dd6d86113cc3beb2edc6e07d8c81db91ecc7a57364e	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.3.zip	1.3
+2017	a5161e724ed270d8b887e76b88ab0497f5ea8fed08e242f0620f722303485c97	http://downloadirpf.receita.fazenda.gov.br/irpf/2017/irpf/arquivos/IRPF2017-1.1.zip	1.1
 
 
 # Receitanet - Linux DEB
@@ -47,3 +51,4 @@ recnet	75dcaa9b12613d0ef051f660de2f56b47a7dc164f033adfc3e52a3e011c757b2	http://w
 recnet	a6678e80d7a931e2923692f20b3cfa687b55475b7a1513235b46301280014467	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.05.deb	1.05	201105
 recnet	d468b9650bdce21384a2179da9e5336c49afbc25cb6d040d22fba9b086ec327a	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.06.deb	1.06	201106
 recnet	061f6f2908c668bfd029128afe00ba7ce04da9095c0eb2f426367f9300945dd4	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.07.deb	1.07	201106
+recnet	f2a455e58a761220806e1044f65fe0c78485dcff30a28e6cd74080f78452e5fe	http://www.receita.fazenda.gov.br/publico/programas/receitanet/receitanet-1.10.deb	1.10	201110
