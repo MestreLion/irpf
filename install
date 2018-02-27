@@ -180,7 +180,8 @@ Opções de instalação:
 	Instala (ou atualiza) a versão mais atual do ReceitaNet.
 
 Se nenhuma das opções de instalação acima forem selecionadas, por padrão instala
-tanto o ReceitaNet quanto o IRPF do ano atual, $year.
+o IRPF do ano atual, $year. O programa ReceitaNet não é mais necessário a partir
+do IRPF 2017.
 
 Opções de menus:
   --menu-ajuda
@@ -263,8 +264,10 @@ elif !((receitanet)) && !((irpf)); then
 		argerr "Para remover é necessário especificar --irpf ANO" \
 			" ou --receitanet"
 	else
-		receitanet=1
 		irpf=1
+		if ((year < 2017)); then
+			receitanet=1
+		fi
 	fi
 fi
 
