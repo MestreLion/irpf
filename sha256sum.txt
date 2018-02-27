@@ -35,6 +35,8 @@
 2016	fce9106d641c33c8046556cf12bc255c602982e09f1457f519ca8f10c64a2ad7	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.2.zip	1.2
 2016	978b42766e3c7dcf04b74dd6d86113cc3beb2edc6e07d8c81db91ecc7a57364e	http://downloadirpf.receita.fazenda.gov.br/irpf/2016/IRPF2016-1.3.zip	1.3
 2017	a5161e724ed270d8b887e76b88ab0497f5ea8fed08e242f0620f722303485c97	http://downloadirpf.receita.fazenda.gov.br/irpf/2017/irpf/arquivos/IRPF2017-1.1.zip	1.1
+2017	6a59c6bf5bcc3c2a2d505109d08ffc6472de65990fe6623941d858645b7a2c8a	http://downloadirpf.receita.fazenda.gov.br/irpf/2017/irpf/arquivos/IRPF2017-1.2.zip	1.2
+2018	fc400594e1eb43050a8ae3f921dd2b07aef762a13f1b7d892fce458bcc44cc6f	http://downloadirpf.receita.fazenda.gov.br/irpf/2018/irpf/arquivos/IRPF2018-1.1.zip	1.1
 
 
 # Receitanet - Linux DEB
