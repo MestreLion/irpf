@@ -43,7 +43,9 @@
 2018	a960cf249c2c74c4fb28534c05bed96a4cb1f842d831a7b7354a7d6304740768	http://downloadirpf.receita.fazenda.gov.br/irpf/2018/irpf/arquivos/IRPF2018-1.3.zip	1.3
 2018	8b98f1eb207015e121a194d35d0610d42a2a54b2d4e61ad8868bbb1100febdac	http://downloadirpf.receita.fazenda.gov.br/irpf/2018/irpf/arquivos/IRPF2018-1.4.zip	1.4
 2018	d7261904b79639d518daf45b711313874063b4cbfdc1fd86b8dd29be692c03f3	http://downloadirpf.receita.fazenda.gov.br/irpf/2018/irpf/arquivos/IRPF2018-1.5.zip	1.5
-
+2018	7e76f856fee71897cef23e44dad3995897e2a5b28bbc520b1a7ab576b9f3813a	http://downloadirpf.receita.fazenda.gov.br/irpf/2018/irpf/arquivos/IRPF2018-1.6.zip	1.6
+2019	f92fe248065c69138b5be049682a45e9c0b3626798a248a704009ac0fdb9c070	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.0.zip	1.0
+2019	33033d01416e2bba7f11a9ff9b33176f02b51e86e0b944a3d150a73718890c72	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.1.zip	1.1
 
 
 # Receitanet - Linux DEB
