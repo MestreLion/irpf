@@ -46,6 +46,19 @@
 2018	7e76f856fee71897cef23e44dad3995897e2a5b28bbc520b1a7ab576b9f3813a	http://downloadirpf.receita.fazenda.gov.br/irpf/2018/irpf/arquivos/IRPF2018-1.6.zip	1.6
 2019	f92fe248065c69138b5be049682a45e9c0b3626798a248a704009ac0fdb9c070	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.0.zip	1.0
 2019	33033d01416e2bba7f11a9ff9b33176f02b51e86e0b944a3d150a73718890c72	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.1.zip	1.1
+2019	7d11ac218ed3860a370fef83f680e2f945ea647d439cce362c370945ecbd4120	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.2.zip	1.2
+2019	abc268c21fc02c2d7fea96479e069b08a87f6be491e65965a79af1b001849e7b	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.3.zip	1.3
+2019	6d511a56f3b028b5b692532764b76f46f725951dd0404420124507809e4708f3	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.4.zip	1.4
+2019	623247f74a86e24b7b2a3894efbd1dee130b1a3e1304b36f4719e00397b1d690	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.5.zip	1.5
+2019	880771c97e6abef8908d6c45cc76b35f8d2f2d154f682557f224b5404854cceb	http://downloadirpf.receita.fazenda.gov.br/irpf/2019/irpf/arquivos/IRPF2019-1.6.zip	1.6
+2020	ade5df4cfe1ba05eda6433944caf1b00b6dd3a60d8c84c52aaae9763a5e3666e	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.0.zip	1.0
+2020	c045947fab6688efd8211eb0e22c0057a8f936539e81901f94278f07f54e1810	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.1.zip	1.1
+2020	53f271e56c846c8a23e556b26b2c206c918f916792892ee3ad5b0a842a3260d4	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.2.zip	1.2
+2020	8e9f9b5816daade142525cfc355383aef0602a30e58d5d441e1b927078f58372	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.3.zip	1.3
+2020	94f08c4a38f4a59e0b1ed4c502a8025be586d790c1ca856a2fb3cf5ca351568a	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.4.zip	1.4
+2020	987d15ce95eb38377431b31b6492d786cff64f983c595057d3feb0c2bf3ddc29	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.5.zip	1.5
+2020	5c0829b2b5725e6b9a89558147bb7b9d455d9b12c2dc2015d5a1d8843013342c	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.6.zip	1.6
+
 
 
 # Receitanet - Linux DEB
