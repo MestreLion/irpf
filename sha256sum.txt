@@ -58,6 +58,7 @@
 2020	94f08c4a38f4a59e0b1ed4c502a8025be586d790c1ca856a2fb3cf5ca351568a	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.4.zip	1.4
 2020	987d15ce95eb38377431b31b6492d786cff64f983c595057d3feb0c2bf3ddc29	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.5.zip	1.5
 2020	5c0829b2b5725e6b9a89558147bb7b9d455d9b12c2dc2015d5a1d8843013342c	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.6.zip	1.6
+2020	8dfbee459e05dc36a252772e81aa08fa866358d0aba1434cdf4782a50fa0af4d	http://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-1.7.zip	1.7
 
 
 
