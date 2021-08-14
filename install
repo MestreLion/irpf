@@ -89,11 +89,11 @@ bold()    { tput bold; printf '%s' "$@"; tput sgr0; }
 red()     { tput setaf 1; bold "$@"; }
 green()   { tput setaf 2; bold "$@"; }
 
-fatal()   { (($#)) && echo "$(red "$@")" >&2 || :; exit 1; }
-message() { ((verbose)) && echo "$(green '* ' "$@")" || :; return; }
+fatal()   { (($#)) && { red "$@"; echo; } >&2 || :; exit 1; }
+message() { ((verbose)) && { green '* ' "$@"; echo; } || :; return; }
 argerr()  { echo "$myname: erro${1:+: $(printf '%s' "$@")}" >&2 ; usage 1 ; }
 invalid() { argerr "opção inválida: $1" ; }
-missing() { argerr "está faltando um operando${1:+ em '$1'}." ; }
+missing() { argerr "está faltando um operando${1:+ em "$1"}." ; }
 integer() { [[ "${1:-}" != *[!0-9]* ]] ||
             argerr "'$1' não é um ano válido."; }
 yesno()   { if (($1)); then green "Sim"; else red "Não"; fi; }
@@ -101,19 +101,20 @@ linefeed(){ ((verbose)) && echo; }
 cmdpath() { type -P "$1"; }
 ppath()   { printf '%q' "$@"; }
 
+# shellcheck disable=SC2120
 confirm()
 {
-	local message=$(bold "${1:-"Confirma?"}")
-	local default=$(bold "NÃO")
+	local message; message=${1:-"Confirma?"}; message=$(bold "$message")
+	local default; default=$(bold "NÃO")
 	local reply
 
 	if ! ((yes)); then
 		linefeed
-		read -p "$message (s/n, padrão $default): " reply
+		read -r -p "$message (s/n, padrão $default): " reply
 		reply="${reply:-$default}"
 		case "$reply" in
 		[YySs]*) ;;
-		*) message "cancelado pelo usuário"; exit 1;;
+		*) message "Cancelado pelo usuário"; exit 1;;
 		esac
 	fi
 }
@@ -259,7 +260,7 @@ if ((purge)); then
 			" Para remover programas específicos,"                 \
 			" utilize --uninstall."
 	fi
-elif !((receitanet)) && !((irpf)); then
+elif ! ((receitanet)) && ! ((irpf)); then
 	if ((uninstall)); then
 		argerr "Para remover é necessário especificar --irpf ANO" \
 			" ou --receitanet"
@@ -292,22 +293,22 @@ iconname="${vendor}-${iconprefix}"
 # Summary and confirmation ----------------------------------------------------
 
 if ((verbose)); then
-	if !((uninstaller)); then
+	if ! ((uninstaller)); then
 		message "Opções selecionadas:"
 	fi
 	if ((purge)); then
-		echo $(red "! REMOVER TODOS OS PROGRAMAS DA RECEITA FEDERAL")
+		red "! REMOVER TODOS OS PROGRAMAS DA RECEITA FEDERAL"; echo
 	elif ((uninstall)); then
-		echo $(red "! REMOVER${progname:+ ${progname^^}}")
+		red "! REMOVER${progname:+ ${progname^^}}"; echo
 	fi
-	if !((purge)) && !((uninstaller)); then
+	if ! ((purge)) && ! ((uninstaller)); then
 		if ((irpf)); then
-			echo "- Programa do IRPF:   $(green $year)"
+			echo "- Programa do IRPF:   $(green "$year")"
 		else
 			echo "- Programa do IRPF:   $(red Não)"
 		fi
 			echo "- Receitanet:         $(yesno $receitanet)"
-		if !((uninstall)); then
+		if ! ((uninstall)); then
 			echo "- Ícones no Desktop:  $(yesno $desktop)"
 			echo "- Inclui menu Ajuda:  $(yesno $helpmenu)"
 			echo "- Inclui menu Leiame: $(yesno $readmemenu)"
@@ -361,7 +362,7 @@ uninstall_check_dir() {
 		return
 	fi
 
-	if !((silent)); then
+	if ! ((silent)); then
 		echo "Pasta ${name:+$name }'$checkdir' não existe." \
 			"O programa já foi removido antes?" >&2
 		echo "Use --force para forçar limpeza de ícones e menus" >&2
@@ -466,10 +467,10 @@ create_uninstaller() {
 	esac
 	message "Gerando script de remoção para $progname_"
 	awk \
-		-v purge=$purge_           \
-		-v uninstall=$uninstall_   \
-		-v irpf=$irpf_             \
-		-v year=$year_             \
+		-v purge="$purge_"           \
+		-v uninstall="$uninstall_"   \
+		-v irpf="$irpf_"             \
+		-v year="$year_"             \
 		-v receitanet=$receitanet_ \
 		-v "progname=${progname_//\"/\\\\\"}" \
 		-v "progdir=${progdir_//\"/\\\\\"}"   \
@@ -507,7 +508,7 @@ download_archive() {
 	local reg
 	local q=()
 
-	if !((verbose)); then
+	if ! ((verbose)); then
 		q+=(--quiet)
 	fi
 
@@ -550,7 +551,7 @@ download_archive() {
 
 empty_dir() {
 	local path=$1
-	if !((force)) && [[ -e "$path" ]]; then
+	if ! ((force)) && [[ -e "$path" ]]; then
 		fatal "A pasta '$path' já existe!"          \
 			" Utilize --uninstall para remover o programa" \
 			" ou --force para sobrescrever arquivos."
@@ -599,7 +600,7 @@ patch_xdg() {
 	fi
 
 	local version="1.0.2"
-	local xdgdesktopmenu="$(cmdpath xdg-desktop-menu)" ||
+	local xdgdesktopmenu; xdgdesktopmenu=$(cmdpath xdg-desktop-menu) ||
 		fatal "'xdg-desktop-menu' não foi encontrado!" \
 			" Instale o pacote xdg-utils."
 
@@ -630,7 +631,7 @@ patch_xdg() {
 install_root() {
 	local icon
 
-	if !((force)) && [[ -d "$desktopdir" ]]; then
+	if ! ((force)) && [[ -d "$desktopdir" ]]; then
 		return
 	fi
 
