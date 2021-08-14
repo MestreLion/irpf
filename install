@@ -98,7 +98,6 @@ integer() { [[ "${1:-}" != *[!0-9]* ]] ||
             argerr "'$1' não é um ano válido."; }
 yesno()   { if (($1)); then green "Sim"; else red "Não"; fi; }
 linefeed(){ ((verbose)) && echo; }
-cmdpath() { type -P "$1"; }
 ppath()   { printf '%q' "$@"; }
 
 # shellcheck disable=SC2120
@@ -286,7 +285,6 @@ irpfdir="$rootdir"/"$irpfbase"
 
 desktopdir="$rootdir"/"$desktopbase"
 rootmenu="$desktopdir"/"$vendor"-ProgramasRFB.directory
-xdg_desktop_menu="$desktopdir"/xdg-desktop-menu
 
 iconname="${vendor}-${iconprefix}"
 
@@ -373,7 +371,7 @@ uninstall_check_dir() {
 uninstall_menus() {
 	local deskfile
 
-	patch_xdg && "$xdg_desktop_menu" uninstall --noupdate "$@"
+	xdg-desktop-menu uninstall --noupdate "$@"
 
 	for deskfile in "$@"; do
 		case "${deskfile##*.}" in
@@ -564,7 +562,7 @@ install_menus() {
 	local deskfile
 
 	# Menu entries
-	patch_xdg && "$xdg_desktop_menu" install --noupdate "$@"
+	xdg-desktop-menu install --noupdate "$@"
 
 	# Desktop icons
 	if ((desktop)); then
@@ -587,46 +585,6 @@ check_version() {
 }
 
 # Install functions -----------------------------------------------------------
-
-# Patch xdg-desktop-menu to fix bug when handling filenames with spaces
-# Using xdg official fix from its git repository at
-# http://cgit.freedesktop.org/xdg/xdg-utils/commit/?id=c96d7b00aca3da1b608fde5
-# See https://bugs.freedesktop.org/show_bug.cgi?id=66605
-# and https://bugs.freedesktop.org/show_bug.cgi?id=69339
-patch_xdg() {
-	if [[ -r "$xdg_desktop_menu" ]]; then
-		# Assume it's already patched
-		return
-	fi
-
-	local version="1.0.2"
-	local xdgdesktopmenu; xdgdesktopmenu=$(cmdpath xdg-desktop-menu) ||
-		fatal "'xdg-desktop-menu' não foi encontrado!" \
-			" Instale o pacote xdg-utils."
-
-	# Copy and patch only the known buggy version, otherwise symlink it
-	mkdir -p "${xdg_desktop_menu%/*}/"
-	if [[ "$("$xdgdesktopmenu" --version | cut -d' ' -f2)" == "$version" ]]
-	then
-		{ cat - "$xdgdesktopmenu" <<-EOF
-		#!/bin/sh
-		#
-		# Patched by IRPF Installer - https://github.com/MestreLion/irpf
-		# to fix bug when handling filenames with spaces, using official
-		# fix from xdg upstream git repository at
-		# http://cgit.freedesktop.org/xdg/xdg-utils/commit/?id=c96d7b00a
-		# See https://bugs.freedesktop.org/show_bug.cgi?id=66605
-		# and https://bugs.freedesktop.org/show_bug.cgi?id=69339
-		#
-		EOF
-		} |
-		sed "/' \$menu_file >/s/ \$menu_file / \"\$menu_file\" /" |
-		sed "s/${version}/${version}-patched/" > "$xdg_desktop_menu"
-		chmod +x "$xdg_desktop_menu"
-	else
-		ln -s "$xdgdesktopmenu" "$xdg_desktop_menu"
-	fi
-}
 
 install_root() {
 	local icon
