@@ -2,7 +2,7 @@
 #
 # Programas de todos os anos podem ser baixados a partir de:
 #
-# http://idg.receita.fazenda.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/dirpf/entrega-da-declaracao-do-irpf/download-programas-dirpf
+# https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/download/pgd/dirpf
 #
 # Algumas versões não estão mais disponíveis, e por isto foram desabilitadas utilizando URL no formato file://
 #
