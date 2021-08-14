@@ -2,4 +2,5 @@
 *.deb
 receitanet/
 IRPF/
+.idea
 shatest

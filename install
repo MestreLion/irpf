@@ -18,10 +18,10 @@
 #    along with this program. See <http://www.gnu.org/licenses/gpl.html>
 #
 # Possui as seguintes características (e vantagens sobre o instalador oficial):
-# - Download automatico dos programas, de qualquer ano desde 2008, sem
+# - Download automático dos programas, de qualquer ano desde 2008, sem
 #     necessidade de navegar no site da RF.
 # - Verificação de integridade do download através de checksums pré-computados.
-# - Não necessita de privilégios adminstrativos para instalação.
+# - Não necessita de privilégios administrativos para instalação.
 # - Instala o Receitanet e o IRPF em uma única etapa.
 # - Instala corretamente ícones e entradas de menu.
 # - Não utiliza GUI, podendo ser automatizado para instalação em massa do IRPF
@@ -150,7 +150,7 @@ Instalador para os programas da Receita Federal (IRPF e ReceitaNet)
 
 Inclui download dos programas, verificação de integridade, entradas de menu
 com ícones oficiais, instalação e remoção sem necessidade de privilégios
-admistrativos (root).
+administrativos (root).
 
 Testado com todos os programas da Receita desde 2008.
 
@@ -342,13 +342,13 @@ purge(){
 
 	message "Removendo pasta raiz e menu principal"
 
-	# Icone principal
+	# Ícone principal
 	for iconsize in "${iconsizes[@]}"; do
 		xdg-icon-resource uninstall --noupdate \
 			--size "$iconsize" "$iconname"
 	done
 
-	# Diretorio raiz
+	# Diretório raiz
 	rm -rf "$rootdir"
 }
 
@@ -397,7 +397,7 @@ uninstall_receitanet() {
 	# Receitanet - atalhos
 	uninstall_menus "${deskfiles[@]}"
 
-	# Receitanet - icones
+	# Receitanet - ícones
 	for icontitle in "${deskfiles[@]:2}"; do
 		xdg-icon-resource uninstall --noupdate --size 32 "${icontitle%.*}"
 	done
@@ -409,7 +409,7 @@ uninstall_receitanet() {
 		done
 	fi
 
-	# Receitanet - diretorio
+	# Receitanet - diretório
 	rm -rf "$receitanetdir"
 }
 
@@ -430,7 +430,7 @@ uninstall_irpf() {
 	# Remove atalhos do menu e do desktop
 	uninstall_menus "${deskfiles[@]}"
 
-	# Remove o diretorio
+	# Remove o diretório
 	rm -rf "$irpfdir"
 }
 
@@ -775,11 +775,11 @@ install_irpf() {
 
 	# Handle variations from each year
 
-	# Until 2014 'Ajuda' menu was the same as in-program 'Ajuda'->'Conteudo'
+	# Until 2014 'Ajuda' menu was the same as in-program 'Ajuda'->'Conteúdo'
 	if ! [[ -f "$helpfile" ]]; then
 		helpexec=("${irpfexec[@]}" -h)
 	fi
-	# In 2009...2011 (but not 2008), 'Leia-me' file was misspeled with '_'
+	# In 2009...2011 (but not 2008), 'Leia-me' file was misspelled with '_'
 	if [[ -f "$irpfdir"/Leia_me.htm ]]; then
 		mv -f "$irpfdir"/Leia_me.htm "$readmefile"
 	fi
@@ -861,7 +861,7 @@ else
 	if ((irpf));       then install_irpf; fi
 fi
 
-# Aplica todas as atualizacoes
+# Aplica todas as atualizações
 xdg-icon-resource forceupdate
 xdg-desktop-menu  forceupdate
 message "Pronto!"
