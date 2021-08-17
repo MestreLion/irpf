@@ -374,9 +374,11 @@ uninstall_menus() {
 	xdg-desktop-menu uninstall --noupdate "$@"
 
 	for deskfile in "$@"; do
-		case "${deskfile##*.}" in
-		desktop) xdg-desktop-icon uninstall "$deskfile";;
-		esac
+		if ! [[ "${deskfile##*.}" == 'desktop' ]]; then
+			continue
+		fi
+		trust_desktop "$deskfile" untrust
+		xdg-desktop-icon uninstall "$deskfile"
 	done
 }
 
@@ -574,6 +576,7 @@ install_menus() {
 			continue
 		fi
 		xdg-desktop-icon install "$deskfile"
+		trust_desktop "$deskfile"
 	done
 }
 
@@ -586,6 +589,27 @@ check_version() {
 		echo "$progversion" > "$versionfile"
 	fi
 }
+
+trust_desktop() {
+	# Set a desktop file as trusted using gio, so nautilus display its icon
+	# and prevent an extra dialog when user launches the file.
+	# See https://askubuntu.com/questions/1070057/
+	if ! type xdg-user-dir gio &>/dev/null; then
+		return
+	fi
+	local deskfile=$1
+	local untrust=${2:-}
+	local dest; dest=$(xdg-user-dir DESKTOP)/$(basename "$deskfile")
+	if [[ "$untrust" ]]; then
+		gio set --type=unset "$dest" "metadata::trusted" &>/dev/null || :
+		return
+	fi
+	gio set "$dest" "metadata::trusted" true
+	# Rename back and forth to avoid restarting nautilus-desktop
+	mv "$dest"{,.trusted}
+	mv "$dest"{.trusted,}
+}
+
 
 # Install functions -----------------------------------------------------------
 
