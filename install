@@ -565,13 +565,16 @@ install_menus() {
 	xdg-desktop-menu install --noupdate "$@"
 
 	# Desktop icons
-	if ((desktop)); then
-		for deskfile in "$@"; do
-			if [[ "${deskfile##*.}" == 'desktop' ]]; then
-				xdg-desktop-icon install "$deskfile"
-			fi
-		done
+	if ! ((desktop)); then
+		return
 	fi
+
+	for deskfile in "$@"; do
+		if ! [[ "${deskfile##*.}" == 'desktop' ]]; then
+			continue
+		fi
+		xdg-desktop-icon install "$deskfile"
+	done
 }
 
 check_version() {
