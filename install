@@ -604,7 +604,7 @@ trust_desktop() {
 		gio set --type=unset "$dest" "metadata::trusted" &>/dev/null || :
 		return
 	fi
-	gio set "$dest" "metadata::trusted" true
+	gio set "$dest" "metadata::trusted" true &>/dev/null || :
 	# Rename back and forth to avoid restarting nautilus-desktop
 	mv "$dest"{,.trusted}
 	mv "$dest"{.trusted,}
