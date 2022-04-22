@@ -604,6 +604,7 @@ trust_desktop() {
 		gio set --type=unset "$dest" "metadata::trusted" &>/dev/null || :
 		return
 	fi
+	# Before Ubuntu 20.04 it was 'yes' instead of 'true'
 	gio set "$dest" "metadata::trusted" true &>/dev/null || :
 	# Rename back and forth to avoid restarting nautilus-desktop
 	mv "$dest"{,.trusted}
