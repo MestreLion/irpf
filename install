@@ -651,7 +651,7 @@ check_java() {
 	if [[ "$package" ]]; then
 		message "Instalando Java${ver:+ $ver} [$package]" \
 			" (necessita senha para autorização)"
-		sudo apt install "$package"
+		sudo apt install -y "$package"
 	fi
 }
 
