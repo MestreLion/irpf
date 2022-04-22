@@ -491,6 +491,7 @@ create_uninstaller() {
 		/^[ \t#:]*--uinst-end[ \t]*\)/   { remove=0 }
 		' \
 		"$0" > "$script"
+	# }"}"}"  # aid sintax highlighters who got lost with shell escapings
 	chmod +x "$script"
 }
 
@@ -573,6 +574,7 @@ install_menus() {
 
 	for deskfile in "$@"; do
 		if ! [[ "${deskfile##*.}" == 'desktop' ]]; then
+			# Do not install .directory files
 			continue
 		fi
 		xdg-desktop-icon install "$deskfile"
