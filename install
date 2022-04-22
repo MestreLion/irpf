@@ -77,7 +77,6 @@ receitanet=0
 irpf=0
 archivefile=""
 archiveversion=""
-javacmd=(java -Xms128m -Xmx512m -jar)
 archiveextra=""
 package=""
 regpaths=('br/gov/serpro/receitanet'{,'/suite'})
@@ -86,6 +85,8 @@ progdir=""
 uninstaller=0
 
 checksumfile="$mydir"/sha256sum.txt
+exectemplate="$mydir"/irpf.sh.in
+execslug=irpf.sh
 
 # Helper functions ------------------------------------------------------------
 
@@ -717,7 +718,7 @@ install_receitanet() {
 	done
 
 	local recnetexec=(
-		"${javacmd[@]}"
+		java -Xms128m -Xmx512m -jar
 		"$(ppath "${receitanetdir}/receitanet.jar")"
 	)
 
@@ -800,15 +801,15 @@ install_irpf() {
 	local helpfile="$irpfdir"/help/AjudaIRPF.pdf
 	local readmefile="$irpfdir"/Leia-me.htm
 
-	local irpfexec=("${javacmd[@]}" "$(ppath "$irpfjar")")
-	local helpexec=(  xdg-open      "$(ppath "$helpfile")")
-	local readmeexec=(xdg-open      "$(ppath "$readmefile")")
+	local irpfexec=${irpfdir}/${execslug}
+	local helpexec=(  xdg-open "$(ppath "$helpfile")")
+	local readmeexec=(xdg-open "$(ppath "$readmefile")")
 
 	# Handle variations from each year
 
 	# Until 2014 'Ajuda' menu was the same as in-program 'Ajuda'->'Conteúdo'
 	if ! [[ -f "$helpfile" ]]; then
-		helpexec=("${irpfexec[@]}" -h)
+		helpexec=("$(ppath "$irpfexec")" -h)
 	fi
 	# In 2009...2011 (but not 2008), 'Leia-me' file was misspelled with '_'
 	if [[ -f "$irpfdir"/Leia_me.htm ]]; then
@@ -819,8 +820,17 @@ install_irpf() {
 		mv -f "$irpfdir"/IRPF.jar "$irpfjar"
 	fi
 
-	# Remove zip cruft
+	# Remove zip cruft (not present anymore since 2017) and fix exec bit
 	rm -f "$irpfdir"/{*.{bat,sh,exe},Execute.txt}
+	chmod -x "$irpfdir"/*.{htm,png}
+
+	# Launcher script
+	sed "
+		s/@YEAR@/$year/g;
+		s/@VERSION@/$archiveextra/g;
+		s/@PACKAGE@/$package/g;
+		" -- "$exectemplate" > "$irpfexec"
+	chmod +x "$irpfexec"
 
 	local deskprefix="$desktopdir"/"$vendor"-"${irpfbase,,}"
 	local irpfdeskfiles=(
@@ -843,7 +853,7 @@ install_irpf() {
 		Name=${irpfbase^^} - Declaração Anual
 		Comment=Imposto de Renda $year
 		GenericName=Receita Federal
-		Exec=${irpfexec[@]}
+		Exec=$(ppath "$irpfexec")
 		Icon=$iconname
 	EOF
 

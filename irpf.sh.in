@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# Script para execução do programa IRPF @YEAR@
+# Gerado pelo instalador automático irpf-install
+# Para mais informações, consulte https://github.com/MestreLion/irpf
+#
+# Copyright (C) 2022 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+# License: GPLv3 or later, at your choice. See <http://www.gnu.org/licenses/gpl>
+#------------------------------------------------------------------------------
+
+version=@VERSION@
+package=@PACKAGE@
+jvmargs=(-Xms128m -Xmx512m)
+jar=irpf.jar
+
+mydir=$(dirname "$(readlink -f "$0")")
+
+#----------------------------------------
+
+exists() { type "$@" >/dev/null 2>&1; }
+
+check_java() {
+	local ver=$1
+	local cmd
+
+	if [[ "$ver" ]]; then
+		# Look for a specific Java version
+		local jvmpath=/usr/lib/jvm
+		local glob=${jvmpath}/java-${ver}-'*'/bin/java
+		cmd=$(find "$jvmpath" -type f -wholename "$glob" -executable -print -quit)
+	else
+		# Try any Java
+		if exists java; then
+			cmd=java
+		fi
+	fi
+	if [[ "$cmd" ]]; then echo "$cmd"; else return 1; fi
+}
+
+error() {
+	msg=$*
+	if [[ "$TERM" == "dumb" ]] && exists zenity; then
+		msg="${msg//&/&amp;}"
+		msg="${msg//</&lt;}"
+		zenity --error --no-wrap --text "$msg"
+	else
+		printf "%b" "$msg" >&2
+	fi
+}
+
+#----------------------------------------
+
+java=$(check_java "$version")
+
+if [[ -z "$java" ]]; then
+	error "Java não encontrado.\nInstale com o comando" \
+		"'sudo apt install $package' e tente novamente.\n"
+	exit 1
+fi
+
+exec "$java" "${jvmargs[@]}" -jar "$mydir"/"$jar"
