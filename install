@@ -26,6 +26,8 @@
 # - Instala corretamente ícones e entradas de menu.
 # - Não utiliza GUI, podendo ser automatizado para instalação em massa do IRPF
 #     de vários anos
+# - Não traz o Java inteiro embutido, utilizando o Java já instalado no sistema
+#     e instalando a versão apropriada caso necessário.
 
 # Default options -------------------------------------------------------------
 
@@ -63,6 +65,7 @@ yes=0
 desktop=0
 helpmenu=0
 readmemenu=0
+javacheck=1
 
 # Constants and other globals -------------------------------------------------
 
@@ -74,8 +77,9 @@ receitanet=0
 irpf=0
 archivefile=""
 archiveversion=""
-archivereg=""
 javacmd=(java -Xms128m -Xmx512m -jar)
+archiveextra=""
+package=""
 regpaths=('br/gov/serpro/receitanet'{,'/suite'})
 progname=""
 progdir=""
@@ -183,6 +187,12 @@ Se nenhuma das opções de instalação acima forem selecionadas, por padrão in
 o IRPF do ano atual, $year. O programa ReceitaNet não é mais necessário a partir
 do IRPF 2017.
 
+  --no-java
+	Não verifica a versão do Java nem tenta instalá-lo caso ausente.
+	O IRPF exige Java instalado no sistema, e de 2021 em diante recomenda
+	uma versão específica. Por padrão a instalação verifica e instala o
+	Java apropriado, o que requer privilégios administrativos (root/sudo).
+
 Opções de menus:
   --menu-ajuda
 	Cria a entrada de menu para a 'Ajuda', um documento em formato PDF.
@@ -232,6 +242,7 @@ while (( $# )); do
 	--menu-leiame	) readmemenu=1;;
 	--desktop	) desktop=1;;
 	--receitanet	) receitanet=1;;
+	--no-java	) javacheck=0;;
 
 	--rootdir=*	) rootdir="${1#*=}";;
 	--rootdir	) shift; rootdir="${1:-}";;
@@ -506,7 +517,7 @@ download_archive() {
 	local path
 	local name
 	local version
-	local reg
+	local extra
 	local q=()
 
 	if ! ((verbose)); then
@@ -519,7 +530,7 @@ download_archive() {
 		name="o $irpfprefix $archivetype"
 	fi
 
-	while IFS="	" read -r -s filetype cksum url version reg; do
+	while IFS="	" read -r -s filetype cksum url version extra; do
 		if [[ -z "$url" ]]            ||
 		   [[ -z "$version" ]]        ||
 		   [[ "$url" == "file://"* ]] ||
@@ -541,7 +552,7 @@ download_archive() {
 		# Found and downloaded. Set "return value" globals
 		archivefile=$path
 		archiveversion=$version
-		archivereg=$reg
+		archiveextra=$extra
 		break
 	done < <(grep -v '^#' "$checksumfile" | LC_ALL=C sort -r -f -k 3)
 
@@ -613,6 +624,35 @@ trust_desktop() {
 	mv "$dest"{.trusted,}
 }
 
+check_java() {
+	local ver=$1
+
+	if ! ((javacheck)); then
+		return
+	fi
+
+	if [[ "$ver" ]]; then
+		# Look for a specific Java version
+		local jvmpath=/usr/lib/jvm
+		local glob=${jvmpath}/java-${ver}-'*'/bin/java
+		local findargs=("$jvmpath" -type f -wholename "$glob"
+			-executable -print -quit)
+		if ! [[ "$(find "${findargs[@]}")" ]]; then
+			package=openjdk-${ver}-jre
+		fi
+	else
+		# Try any Java
+		if ! exists java; then
+			package=java
+		fi
+	fi
+
+	if [[ "$package" ]]; then
+		message "Instalando Java${ver:+ $ver} [$package]" \
+			" (necessita senha para autorização)"
+		sudo apt install "$package"
+	fi
+}
 
 # Install functions -----------------------------------------------------------
 
@@ -653,6 +693,7 @@ install_receitanet() {
 
 	download_archive 'recnet'
 	empty_dir "$receitanetdir"
+	check_java
 
 	message "Instalando o Receitanet $archiveversion"
 
@@ -667,7 +708,7 @@ install_receitanet() {
 		Path "$receitanetdir"
 		Origem A
 		Tipo suite
-		Versao "$archivereg"
+		Versao "$archiveextra"
 		Instalacao D
 	)
 	for regpath in "${regpaths[@]}"; do
@@ -737,6 +778,7 @@ install_receitanet() {
 install_irpf() {
 	empty_dir "$irpfdir"
 	download_archive "$year"
+	check_java "$archiveextra"
 
 	message "Instalando o $irpfprefix $year"
 
