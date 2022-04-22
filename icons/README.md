@@ -1,12 +1,23 @@
-Os ícones desta pasta são os oficiais da Receita Federal do Brasil, e foram obtidos a partir dos arquivos de programas da Receita.
+Os ícones desta pasta são os oficiais da Receita Federal do Brasil, e foram obtidos a partir dos arquivos de programas do Imposto de Renda.
 
-Até a presente presente data (04/04/2015), todos os arquivos aqui listados estão publicamente disponíveis para download no site da Receita. Foi utlizada como referência a versão mais recente de cada arquivo (`zip` ou `deb`), mas os mesmos ícones também estão presentes em arquivos de anos anteriores.
+Todos os arquivos aqui listados estão publicamente disponíveis para download no site da Receita Federal.
 
-- `rfb-32.png :` [irpf2014_1.6-1_all.deb](http://www.receita.fazenda.gov.br/publico/programas/IRPF/2014/PGDIRPF2014/Java/Linux/irpf2014_1.6-1_all.deb)/opt/ProgramasRFB/IRPF2014/RFB.png
+- `rfb-32.png`: [irpf2014_1.6-1_all.deb](http://www.receita.fazenda.gov.br/publico/programas/IRPF/2014/PGDIRPF2014/Java/Linux/irpf2014_1.6-1_all.deb)/opt/ProgramasRFB/IRPF2014/RFB.png
 
-- `rfb-64.png :` [IRPF2015-1.1.zip](http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.1.zip)/irpf.jar/icones/RFB_64px.png
+De 2015 em diante a Receita Federal deixou de publicar o instalador no formato `.deb`, e portanto o ícone em tamanho 32x32 não é mais distribuído.
 
-- `rfb-512.png:` [IRPF2015-1.1.zip](http://www.receita.fazenda.gov.br/publico/programas/IRPF/2015/PGDIRPF2015/Java/zip/IRPF2015-1.1.zip)/irpf.jar/icones/RFB.png
+Até 2020 os ícones em tamanho 64x64 e 512x512 estavam presentes no seguinte caminho dentro do arquivo `.zip` do programa do Imposto de Renda:
+
+- `rfb-64.png`:  [IRPF2020-2.0.zip](https://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-2.0.zip)/IRPF2020/irpf.jar/icones/RFB_64px.png
+
+- `rfb-512.png`: [IRPF2020-2.0.zip](https://downloadirpf.receita.fazenda.gov.br/irpf/2020/irpf/arquivos/IRPF2020-2.0.zip)/IRPF2020/irpf.jar/icones/RFB.png
+
+De 2021 em diante os ícones em si permaneceram inalterados mas o caminho dos arquivos dentro do arquivo `.zip` mudou para:
+
+- `rfb-64.png`:  [IRPF2021-1.9.zip](https://downloadirpf.receita.fazenda.gov.br/irpf/2021/irpf/arquivos/IRPF2021-1.9.zip)/IRPF2021/lib-modulos/irpf_icones.jar/icones/RFB_64px.png
+
+- `rfb-512.png`: [IRPF2021-1.9.zip](https://downloadirpf.receita.fazenda.gov.br/irpf/2021/irpf/arquivos/IRPF2021-1.9.zip)/IRPF2021/lib-modulos/irpf_icones.jar/icones/RFB.png
+
 
 Permissões, tamanho (em bytes) e data:
 
