@@ -820,6 +820,11 @@ install_irpf() {
 		mv -f "$irpfdir"/IRPF.jar "$irpfjar"
 	fi
 
+	local wmclass=""
+	if ((year >= 2021)); then
+		wmclass="StartupWMClass=serpro-ppgd-app-IRPFPGD"
+	fi
+
 	# Remove zip cruft (not present anymore since 2017) and fix exec bit
 	rm -f "$irpfdir"/{*.{bat,sh,exe},Execute.txt}
 	chmod -x "$irpfdir"/*.{htm,png}
@@ -853,6 +858,7 @@ install_irpf() {
 		Name=${irpfbase^^} - Declaração Anual
 		Comment=Imposto de Renda $year
 		GenericName=Receita Federal
+		${wmclass}
 		Exec=$(ppath "$irpfexec")
 		Icon=$iconname
 	EOF
