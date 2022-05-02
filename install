@@ -638,13 +638,13 @@ check_java() {
 		local glob=${jvmpath}/java-${ver}-'*'/bin/java
 		local findargs=("$jvmpath" -type f -wholename "$glob"
 			-executable -print -quit)
-		if ! [[ "$(find "${findargs[@]}")" ]]; then
+		if ! [[ -e "$jvmpath" && "$(find "${findargs[@]}")" ]]; then
 			package=openjdk-${ver}-jre
 		fi
 	else
 		# Try any Java
 		if ! exists java; then
-			package=java
+			package=default-jre
 		fi
 	fi
 
