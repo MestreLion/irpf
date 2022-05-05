@@ -64,6 +64,7 @@
 2021	8c9b4b6394010d00eb46172ec862a661ec0a353af453ff9f78189824ddf5c3e2	https://downloadirpf.receita.fazenda.gov.br/irpf/2021/irpf/arquivos/IRPF2021-1.8.zip	1.8	11
 2021	1d0cdbb00e141caf2d65b85be88b560b86b3633bf117b7d34221659b89c8e5ee	https://downloadirpf.receita.fazenda.gov.br/irpf/2021/irpf/arquivos/IRPF2021-1.9.zip	1.9	11
 2022	ff986bd780bab62d9a2eec9369e70ed350180308f0687a3ec01b74525c640b50	https://downloadirpf.receita.fazenda.gov.br/irpf/2022/irpf/arquivos/IRPF2022-1.3.zip	1.3	11
+2022	ac16918a9ad90268610b6cfdf4ac1c7ec65a7030f52dfce81a3fba4ddccfceda	https://downloadirpf.receita.fazenda.gov.br/irpf/2022/irpf/arquivos/IRPF2022-1.4.zip	1.4	11
 
 
 # Receitanet - Linux DEB
