@@ -11,6 +11,7 @@
 # pois a entidade emissora, "Autoridade Certificadora SERPRORFBv4, ICP-Brasil" não é reconhecida.
 # Para maiores detalhes, veja https://bugzilla.mozilla.org/show_bug.cgi?id=438825
 #
+# Ano	sha256	URL	Versão	Java
 2008	acfb0a1856d84e1306c1b140f1aaf1f4579330d3b49e2a0d1d67980fe60e4643	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2008/PGDIrpf2008/Java/ZIP/irpf2008v3.1.zip	3.1
 2009	d88164c4ffc1ef2bc8f7e98f6f81f152bdd548e9aa476a937e2f24353d21f94f	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.0.zip	2.0
 2009	47fa7241de610b2570dc5faf22e9cbc5253e7f5583288c95df2528054e813a57	http://www.receita.fazenda.gov.br/Publico/programas/irpf/2009/PGDIrpf2009/Java/ZIP/IRPF2009v2.1.zip	2.1
@@ -67,7 +68,8 @@
 2022	ac16918a9ad90268610b6cfdf4ac1c7ec65a7030f52dfce81a3fba4ddccfceda	https://downloadirpf.receita.fazenda.gov.br/irpf/2022/irpf/arquivos/IRPF2022-1.4.zip	1.4	11
 2022	33bbef2ad800b36734d5992210b58abd536fdaea7705a5fd8b384f56a627468d	https://downloadirpf.receita.fazenda.gov.br/irpf/2022/irpf/arquivos/IRPF2022-1.8.zip	1.8	11
 2023	d24ae893e0e3e5f680b85b0be5a663053c47af0d8148406732636fdedb8ad65e	https://downloadirpf.receita.fazenda.gov.br/irpf/2023/irpf/arquivos/IRPF2023-1.2.zip	1.2	11
-
+2023	88956b8ff78c20e1d9d9ef9aa4f9d1fc7d12422610f739f90419b61fc0db6da4	https://downloadirpf.receita.fazenda.gov.br/irpf/2023/irpf/arquivos/IRPF2023-1.5.zip	1.5	11
+2024	e2a57b5eddb3e64160593841d852bb385018dc74d60363c2dbcb531a4e2b8307	https://downloadirpf.receita.fazenda.gov.br/irpf/2024/irpf/arquivos/IRPF2024-1.1.zip	1.1	11
 
 # Receitanet - Linux DEB
 #
