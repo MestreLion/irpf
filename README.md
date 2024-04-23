@@ -120,6 +120,20 @@ Opções de remoção:
 	resulta em erro. Demais opções são ignoradas.
 ```
 
+```console
+$ ./install 
+* Opções selecionadas:
+- Programa do IRPF:   2024
+- Receitanet:         Não
+- Ícones no Desktop:  Não
+- Inclui menu Ajuda:  Não
+- Inclui menu Leiame: Não
+- Pasta downloads:    /home/rodrigo/.local/opt/ProgramasRFB/download
+- Pasta principal:    /home/rodrigo/.local/opt/ProgramasRFB
+
+Confirma? (s/n, padrão NÃO): 
+```
+
 Desinstalação
 -------------
 
