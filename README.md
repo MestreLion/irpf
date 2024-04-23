@@ -120,6 +120,7 @@ Opções de remoção:
 	resulta em erro. Demais opções são ignoradas.
 ```
 
+Exemplo:
 ```console
 $ ./install 
 * Opções selecionadas:
@@ -131,7 +132,37 @@ $ ./install
 - Pasta downloads:    /home/rodrigo/.local/opt/ProgramasRFB/download
 - Pasta principal:    /home/rodrigo/.local/opt/ProgramasRFB
 
-Confirma? (s/n, padrão NÃO): 
+Confirma? (s/n, padrão NÃO): s
+
+* Baixando o IRPF 2024: IRPF2024-1.1.zip
+--2024-04-23 16:00:16--  https://downloadirpf.receita.fazenda.gov.br/irpf/2024/irpf/arquivos/IRPF2024-1.1.zip
+Resolving downloadirpf.receita.fazenda.gov.br (downloadirpf.receita.fazenda.gov.br)... 161.148.231.16
+Connecting to downloadirpf.receita.fazenda.gov.br (downloadirpf.receita.fazenda.gov.br)|161.148.231.16|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 50379578 (48M) [application/zip]
+Saving to: ‘/home/rodrigo/.local/opt/ProgramasRFB/download/IRPF2024-1.1.zip’
+
+IRPF2024-1.1.zip  100%[======================================================================>]  48.04M  2.92MB/s  in 17s
+
+2024-04-23 16:00:33 (2.87 MB/s) - ‘/home/rodrigo/.local/opt/ProgramasRFB/download/IRPF2024-1.1.zip’ saved [50379578/50379578]
+
+* Verificando integridade do arquivo
+/home/rodrigo/.local/opt/ProgramasRFB/download/IRPF2024-1.1.zip: OK
+* Instalando o IRPF 2024
+* Gerando script de remoção para o IRPF 2024
+* Pronto!
+```
+
+Estrutura:
+```
+$ ls -l ~/.local/opt/ProgramasRFB/
+total 45,056
+drwxrwxr-x 2 rodrigo rodrigo  4,096 2024-04-23 16:07 download
+drwxrwxr-x 5 rodrigo rodrigo  4,096 2022-04-28 22:32 IRPF2022
+drwxrwxr-x 6 rodrigo rodrigo  4,096 2023-05-25 23:15 IRPF2023
+drwxrwxr-x 6 rodrigo rodrigo  4,096 2024-04-23 16:00 IRPF2024
+drwxrwxr-x 2 rodrigo rodrigo  4,096 2024-04-23 16:00 xdg
+-rwxrwxr-x 1 rodrigo rodrigo 23,311 2022-05-01 22:52 uninstall
 ```
 
 Desinstalação
@@ -141,6 +172,11 @@ Basta usar a opção `--uninstall-all` para remover todos os programas e então 
 ```sh
 ~/.local/share/irpf/install --uninstall-all
 rm -rf ~/.local/share/irpf
+```
+
+Ou, caso não tenha mais o repositório git local, use o `uninstall` que foi gerado na pasta de instalação:
+```sh
+~/.local/opt/ProgramasRFB/uninstall
 ```
 ---
 
